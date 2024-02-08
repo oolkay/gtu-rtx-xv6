@@ -36,14 +36,29 @@ typedef struct s_texture
     t_img *east;
 } t_texture;
 
+typedef struct s_keys
+{
+    int w;
+    int a;
+    int s;
+    int d;
+    int esc;
+    int q;
+    int left;
+    int right;
+    int e;
+    int m;
+} t_keys;
 
 typedef struct s_game
 {
     void *mlx;
     void *win;
+    t_keys keys;
     t_player pl;
     t_img img;
     void* image;
+    int frame;
 } t_game;
 
 #endif
