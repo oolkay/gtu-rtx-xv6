@@ -8,7 +8,7 @@
 # define W 119
 # define ESC 53
 # define PI 3.14159265359
-# define deltaSabit 16
+# define deltaSabit 5
 
 
 static t_game init_game()
@@ -26,7 +26,33 @@ static t_game init_game()
 
 static void drawLine(t_game *game)
 {
-
+    int x = game->pl.x;
+    int y = game->pl.y;
+    int x1 = x + 64 * cos(game->pl.angle);
+    int y1 = y + 64 * sin(game->pl.angle);
+    int dx = abs(x1 - x);
+    int dy = abs(y1 - y);
+    int sx = x < x1 ? 1 : -1;
+    int sy = y < y1 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+    int e2;
+    while (1)
+    {
+        mlx_pixel_put(game->mlx, game->win, x, y, 0x00ff00);
+        if (x == x1 && y == y1)
+            break;
+        e2 = err;
+        if (e2 > -dx)
+        {
+            err -= dy;
+            x += sx;
+        }
+        if (e2 < dy)
+        {
+            err += dx;
+            y += sy;
+        }
+    }
 }
 
 static void cub_update(void *param)
