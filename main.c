@@ -2,18 +2,17 @@
 #include <unistd.h>
 #include <math.h>
 
-# define A 97
-# define S 115
-# define D 100
-# define W 119
-# define ESC 53
-# define PI 3.14159265359
-# define lineLen 16
-# define mapWidth 10
-# define mapHeight 10
-# define winWidth 640
-# define winHeight 640
-
+#define A 97
+#define S 115
+#define D 100
+#define W 119
+#define ESC 53
+#define PI 3.14159265359
+#define lineLen 16
+#define mapWidth 10
+#define mapHeight 10
+#define winWidth 640
+#define winHeight 640
 
 int map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -25,9 +24,7 @@ int map[10][10] = {
     {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
     {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
     {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
-
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 static t_game init_game()
 {
@@ -42,42 +39,120 @@ static t_game init_game()
     return game;
 }
 
+// static void drawDebug(float bx, float by, float ex, float ey, t_game *game, int color)
+// {
+//     float x = bx;
+//     float y = by;
+//     if (bx == ex && by == ey)
+//         return;
+//     float step = fabs(ex - bx);
+//     if (fabs(ey - by) > step)
+//         step = fabs(ey - by);
+//     float xInc = (ex - bx) / step;
+//     float yInc = (ey - by) / step;
+//     for (int i = 0; i < step; i++)
+//     {
+//         mlx_pixel_put(game->mlx, game->win, x, y, color);
+//         x += xInc;
+//         y += yInc;
+//     }
+// }
+
 static void drawLine(t_game *game)
 {
-    float beginx = game->pl.x + 8;
-    float beginy = game->pl.y + 8;
+    float beginx = game->pl.x + 16 / 2;
+    float beginy = game->pl.y + 16 / 2;
+    float endx = beginx;
+    float endy = beginy;
 
-    float endx = 0;
-    float endy = 0;
-        endx = beginx;
-        endy = beginy;
-    while (map[(int)endy / 64][(int)endx / 64] != 1)
+    float ang = game->pl.angle;
+    printf("angle: %f, asDEgree: %f, tan: %f\n", ang, ang * 180 / PI, tan(ang));
+    if((tan(ang) < 0.001 && tan(ang) > -0.001) || (tan(ang) > 999 || tan(ang) < -999))
+        return;
+
+    float dx, dy, x1, y1, x2, y2;
+    float x0, y0;
+    float distV, distH;
+
+    if (ang > PI / 2 && ang < 3 * PI / 2)
     {
-        if (endx < 0 || endx > mapWidth * 64 || endy < 0 || endy > mapHeight * 64)
-            break;
-        if (map[(int)endy / 64][(int)endx / 64] == 1)
-            break;
-        endx += cos(game->pl.angle);
-        endy += sin(game->pl.angle);
+        x1 = ((int)beginx / 64) * 64 - 0.0001;
+        y1 = abs(beginy - (beginx - x1) * tan(ang));
+        x0 = -64;
+        y0 = -64 * tan(ang);
     }
-    endx -= cos(game->pl.angle);
+    else if (ang < PI / 2 || ang > 3 * PI / 2)
+    {
+        x1 = ((int)beginx / 64) * 64 + 64;
+        y1 = abs(beginy - (beginx - x1) * tan(ang));
+        x0 = 64;
+        y0 = 64 * tan(ang);
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        if((int)y1 / 64 < 0 || (int)y1 / 64 > mapHeight || (int)x1 / 64 < 0 || (int)x1 / 64 > mapWidth)
+            break;
+        if (map[(int)y1 / 64][(int)x1 / 64] == 1)
+            break;
+        x1 += x0;
+        y1 += y0;
+    }
+    // drawDebug(beginx, beginy, x1, y1, game, 0x0000ff);
 
-    // float endx = beginx + 64 * cos(game->pl.angle);
-    // float endy = beginy + 64 * sin(game->pl.angle);
+    distV = sqrt(pow(x1 - game->pl.x, 2) + pow(y1 - game->pl.y, 2));
+
+    if (ang > 0 && ang < PI)
+    {
+        y2 = ((int)beginy / 64) * 64 + 64;
+        x2 = abs(beginx - (beginy - y2) / tan(ang));
+        y0 = 64;
+        x0 = 64 / tan(ang);
+    }
+    else if (ang > PI && ang < 2 * PI)
+    {
+        y2 = ((int)beginy / 64) * 64 - 0.0001;
+        x2 = abs(beginx - (beginy - y2) / tan(ang));
+        y0 = -64;
+        x0 = -64 / tan(ang);
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        if((int)y2 / 64 < 0 || (int)y2 / 64 > mapHeight || (int)x2 / 64 < 0 || (int)x2 / 64 > mapWidth)
+            break;
+        if (map[(int)y2 / 64][(int)x2 / 64] == 1)
+            break;
+        x2 += x0;
+        y2 += y0;
+    }
+    // drawDebug(beginx, beginy, x2, y2, game, 0xff00ff);
+
+    distH = sqrt(pow(x2 - game->pl.x, 2) + pow(y2 - game->pl.y, 2));
+
+    if(distV < distH)
+    {
+        endx = x1;
+        endy = y1;
+    }
+    else
+    {
+        endx = x2;
+        endy = y2;
+    }
+
     float x = beginx;
     float y = beginy;
-    float step = fabs(endx-beginx);
+    float step = fabs(endx - beginx);
     if (fabs(endy - beginy) > step)
         step = fabs(endy - beginy);
     float xInc = (endx - beginx) / step;
     float yInc = (endy - beginy) / step;
     for (int i = 0; i < step; i++)
     {
-        mlx_pixel_put(game->mlx, game->win, x, y, 0xff0000);
+        mlx_pixel_put(game->mlx, game->win, x, y, 0xff00ff);
         x += xInc;
         y += yInc;
     }
-    
+
     // float dx = 64 * cos(game->pl.angle);
     // float dy = 64 * sin(game->pl.angle);
     // float px = game->pl.x+8;
@@ -116,14 +191,14 @@ static int drawPlayer(void *_game)
     t_game *game = _game;
     for (int i = 0; i < 16; ++i)
     {
-        for (int  j = 0; j < 16; j++)
+        for (int j = 0; j < 16; j++)
         {
             mlx_pixel_put(game->mlx, game->win, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
     }
     for (int i = 0; i < 16; ++i)
     {
-        for (int  j = 0; j < 16; j++)
+        for (int j = 0; j < 16; j++)
         {
             mlx_pixel_put(game->mlx, game->win, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
@@ -159,12 +234,12 @@ static int movePlayer(int keycode, void *_game)
         game->pl.x += game->pl.dx;
         game->pl.y += game->pl.dy;
     }
-	if (keycode == S)
+    if (keycode == S)
     {
         game->pl.x -= game->pl.dx;
         game->pl.y -= game->pl.dy;
     }
-	if (keycode == A)
+    if (keycode == A)
     {
         game->pl.angle -= 0.1;
         if (game->pl.angle < 0)
@@ -172,7 +247,7 @@ static int movePlayer(int keycode, void *_game)
         game->pl.dx = lineLen * cos(game->pl.angle);
         game->pl.dy = lineLen * sin(game->pl.angle);
     }
-	if (keycode == D)
+    if (keycode == D)
     {
         game->pl.angle += 0.1;
         if (game->pl.angle > 2 * PI)
@@ -182,13 +257,12 @@ static int movePlayer(int keycode, void *_game)
     }
     drawMap(game);
     drawPlayer(game);
-
 }
 
 int main()
 {
     t_game game = init_game();
-    int x , y;
+    int x, y;
     // game.image = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &x, &y);
     game.win = mlx_new_window(game.mlx, winWidth, winHeight, "CUB3D");
 
@@ -198,5 +272,4 @@ int main()
     drawMap(&game);
     mlx_hook(game.win, 02, 1L << 0, &movePlayer, &game);
     mlx_loop(game.mlx);
-
 }
