@@ -13,6 +13,7 @@
 #define mapHeight 10
 #define winWidth 640
 #define winHeight 640
+#define FOV 60
 
 int map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -58,15 +59,14 @@ static t_game init_game()
 //     }
 // }
 
-static void drawLine(t_game *game)
+static void drawLine(t_game *game, float angle)
 {
     float beginx = game->pl.x + 16 / 2;
     float beginy = game->pl.y + 16 / 2;
     float endx = beginx;
     float endy = beginy;
 
-    float ang = game->pl.angle;
-    printf("angle: %f, asDEgree: %f, tan: %f\n", ang, ang * 180 / PI, tan(ang));
+    float ang = angle;
     if((tan(ang) < 0.001 && tan(ang) > -0.001) || (tan(ang) > 999 || tan(ang) < -999))
         return;
 
@@ -74,48 +74,48 @@ static void drawLine(t_game *game)
     float x0, y0;
     float distV, distH;
 
-    if (ang > PI / 2 && ang < 3 * PI / 2)
+    if (ang > PI / 2 && ang < 3 * PI / 2) // looking left
     {
-        x1 = ((int)beginx / 64) * 64 - 0.0001;
-        y1 = abs(beginy - (beginx - x1) * tan(ang));
-        x0 = -64;
+        x1 = ((int)beginx / 64) * 64 - 0.0001; // -0.0001 to detect the wall from map index or it will never detect the wall
+        y1 = beginy - (beginx - x1) * tan(ang); 
+        x0 = -64; // goind left so x0 is -64
         y0 = -64 * tan(ang);
     }
-    else if (ang < PI / 2 || ang > 3 * PI / 2)
+    else if (ang < PI / 2 || ang > 3 * PI / 2) // looking right
     {
-        x1 = ((int)beginx / 64) * 64 + 64;
-        y1 = abs(beginy - (beginx - x1) * tan(ang));
-        x0 = 64;
+        x1 = ((int)beginx / 64) * 64 + 64; // ((int)beginx / 64) * 64 gives us the closest left wall so we add 64 to get the closest right wall
+        y1 = beginy - (beginx - x1) * tan(ang);
+        x0 = 64; // goind right so x0 is 64
         y0 = 64 * tan(ang);
     }
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) // 10 TILE is the max distance our ray can travel
     {
-        if((int)y1 / 64 < 0 || (int)y1 / 64 > mapHeight || (int)x1 / 64 < 0 || (int)x1 / 64 > mapWidth)
+        if((int)y1 / 64 < 0 || (int)y1 / 64 > mapHeight || (int)x1 / 64 < 0 || (int)x1 / 64 > mapWidth) // if we are out of the map
             break;
-        if (map[(int)y1 / 64][(int)x1 / 64] == 1)
+        if (map[(int)y1 / 64][(int)x1 / 64] == 1) // if we hit a wall
             break;
         x1 += x0;
-        y1 += y0;
+        y1 += y0; 
     }
     // drawDebug(beginx, beginy, x1, y1, game, 0x0000ff);
 
-    distV = sqrt(pow(x1 - game->pl.x, 2) + pow(y1 - game->pl.y, 2));
+    distV = sqrt(pow(x1 - game->pl.x, 2) + pow(y1 - game->pl.y, 2)); // distance from the player to the Vertical wall
 
-    if (ang > 0 && ang < PI)
+    if (ang > 0 && ang < PI) // looking down
     {
-        y2 = ((int)beginy / 64) * 64 + 64;
-        x2 = abs(beginx - (beginy - y2) / tan(ang));
-        y0 = 64;
+        y2 = ((int)beginy / 64) * 64 + 64; // ((int)beginy / 64) * 64 gives us the closest up wall so we add 64 to get the closest down wall
+        x2 = beginx - (beginy - y2) / tan(ang); 
+        y0 = 64; // goind down so y0 is 64
         x0 = 64 / tan(ang);
     }
-    else if (ang > PI && ang < 2 * PI)
+    else if (ang > PI && ang < 2 * PI) // looking up
     {
-        y2 = ((int)beginy / 64) * 64 - 0.0001;
-        x2 = abs(beginx - (beginy - y2) / tan(ang));
-        y0 = -64;
+        y2 = ((int)beginy / 64) * 64 - 0.0001; // -0.0001 to detect the wall from map index or it will never detect the wall
+        x2 = beginx - (beginy - y2) / tan(ang);
+        y0 = -64; // goind up so y0 is -64
         x0 = -64 / tan(ang);
     }
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) // 10 TILE is the max distance our ray can travel
     {
         if((int)y2 / 64 < 0 || (int)y2 / 64 > mapHeight || (int)x2 / 64 < 0 || (int)x2 / 64 > mapWidth)
             break;
@@ -126,7 +126,7 @@ static void drawLine(t_game *game)
     }
     // drawDebug(beginx, beginy, x2, y2, game, 0xff00ff);
 
-    distH = sqrt(pow(x2 - game->pl.x, 2) + pow(y2 - game->pl.y, 2));
+    distH = sqrt(pow(x2 - game->pl.x, 2) + pow(y2 - game->pl.y, 2));    // distance from the player to the Horizontal wall
 
     if(distV < distH)
     {
@@ -203,7 +203,10 @@ static int drawPlayer(void *_game)
             mlx_pixel_put(game->mlx, game->win, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
     }
-    drawLine(game);
+    for (int i = 0; i < FOV; i++)
+    {
+        drawLine(game, game->pl.angle - PI / 6 + i * PI / 180);
+    }
     return (1);
 }
 
