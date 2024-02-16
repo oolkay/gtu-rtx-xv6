@@ -32,9 +32,9 @@ static t_game init_game()
     t_game game;
     game.mlx = NULL;
     game.mlx = mlx_init();
-    game.pl.x = 128;
-    game.pl.y = 128;
-    game.pl.angle = 0;
+    game.pl.x = 120;
+    game.pl.y = 120;
+    game.pl.angle = PI/4;
     game.pl.dx = lineLen * cos(game.pl.angle);
     game.pl.dy = lineLen * sin(game.pl.angle);
     return game;
@@ -67,8 +67,6 @@ static void drawLine(t_game *game, float angle)
     float endy = beginy;
 
     float ang = angle;
-    if((tan(ang) < 0.001 && tan(ang) > -0.001) || (tan(ang) > 999 || tan(ang) < -999))
-        return;
 
     float dx, dy, x1, y1, x2, y2;
     float x0, y0;
@@ -205,7 +203,8 @@ static int drawPlayer(void *_game)
     }
     for (int i = 0; i < FOV; i++)
     {
-        drawLine(game, game->pl.angle - PI / 6 + i * PI / 180);
+        drawLine(game, game->pl.angle + ((i / 2) * PI / 180));
+        drawLine(game, game->pl.angle - ((i / 2) * PI / 180));
     }
     return (1);
 }
