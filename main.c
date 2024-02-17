@@ -73,7 +73,7 @@ static void drawLine(t_game *game, double angle)
 {
     double beginx = game->pl.x + 16 / 2;
     double beginy = game->pl.y + 16 / 2;
-    t_fVector endPoint;
+    t_dVector endPoint;
     double endx = beginx;
     double endy = beginy;
 

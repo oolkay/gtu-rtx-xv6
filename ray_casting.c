@@ -19,9 +19,9 @@ static int isHitWall(int **map, double x, double y)
     return 0;
 }
 
-static void horizontalRayCast(const t_game *game, t_fVector *endPoint, double angle)
+static void horizontalRayCast(const t_game *game, t_dVector *endPoint, double angle)
 {
-    t_fVector step;
+    t_dVector step;
     float     scale;
 
     step.y = CELL_SIZE;
@@ -46,9 +46,9 @@ static void horizontalRayCast(const t_game *game, t_fVector *endPoint, double an
     }
 }
 
-static void verticalRayCast(const t_game *game, t_fVector *endPoint, double angle)
+static void verticalRayCast(const t_game *game, t_dVector *endPoint, double angle)
 {
-    t_fVector step;
+    t_dVector step;
     float     scale;
 
     step.x = CELL_SIZE;
@@ -73,10 +73,10 @@ static void verticalRayCast(const t_game *game, t_fVector *endPoint, double angl
     }
 }
 
-void rayCasting(const t_game *game, t_fVector *endPoint, double angle)
+void rayCasting(const t_game *game, t_dVector *endPoint, double angle)
 {
-    t_fVector vEndPoint;
-    t_fVector hEndPoint;
+    t_dVector vEndPoint;
+    t_dVector hEndPoint;
     double  vRayLen;
     double  hRayLen;
 
