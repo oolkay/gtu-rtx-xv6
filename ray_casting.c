@@ -21,23 +21,23 @@ static int isHitWall(int **map, double x, double y)
 
 static void horizontalRayCast(const t_game *game, t_dVector *endPoint, double angle)
 {
-    t_dVector step;
+    t_dVector step; // En yakın kesişimi bulduktan sonra eklenecek olan x ve y
     float     scale;
 
     step.y = CELL_SIZE;
     if (sin(angle) > 0)
-        endPoint->y = (int)(game->pl.y + 8) / 64 * 64 + 64;
+        endPoint->y = (int)(game->pl.y + 8) / 64 * 64 + 64; // en yakın kesişim y
     else
     {
-        endPoint->y = (int)(game->pl.y + 8) / 64 * 64 - 0.0001;
+        endPoint->y = (int)(game->pl.y + 8) / 64 * 64 - 0.0001; // en yakın kesişim y
         step.y *= -1;
     }
-    step.x = step.y / tan(angle);
-    scale = fabs((endPoint->y - (game->pl.y + 8)) / tan(angle));
+    scale = fabs((endPoint->y - (game->pl.y + 8)) / tan(angle)); // en yakın kesişimin noktasının x'ini bulmak için aşağıda daha iyi anlarsın
+    step.x = step.y / tan(angle); // en yakın kesişimden sonra her adımda eklenecek olan x
     if (cos(angle) > 0)
-        endPoint->x = game->pl.x + 8 + scale;
+        endPoint->x = game->pl.x + 8 + scale; // en yakın kesişim x
     else
-        endPoint->x = game->pl.x + 8 - scale;
+        endPoint->x = game->pl.x + 8 - scale; // en yakın kesişim x
     while (isInMap(game->map, endPoint->x, endPoint->y)
         && !isHitWall(game->map, endPoint->x, endPoint->y))
     {
