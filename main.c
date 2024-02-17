@@ -9,8 +9,6 @@
 #define ESC 53
 #define PI 3.14159265359
 #define lineLen 16
-#define mapWidth 10
-#define mapHeight 10
 #define winWidth 640
 #define winHeight 640
 #define FOV 60
@@ -37,20 +35,29 @@ static t_game init_game()
     game.pl.angle = PI/4;
     game.pl.dx = lineLen * cos(game.pl.angle);
     game.pl.dy = lineLen * sin(game.pl.angle);
+    game.map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        game.map[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            game.map[i][j] = map[i][j];
+        }
+    }
     return game;
 }
 
-// static void drawDebug(float bx, float by, float ex, float ey, t_game *game, int color)
+// static void drawDebug(double bx, double by, double ex, double ey, t_game *game, int color)
 // {
-//     float x = bx;
-//     float y = by;
+//     double x = bx;
+//     double y = by;
 //     if (bx == ex && by == ey)
 //         return;
-//     float step = fabs(ex - bx);
+//     double step = fabs(ex - bx);
 //     if (fabs(ey - by) > step)
 //         step = fabs(ey - by);
-//     float xInc = (ex - bx) / step;
-//     float yInc = (ey - by) / step;
+//     double xInc = (ex - bx) / step;
+//     double yInc = (ey - by) / step;
 //     for (int i = 0; i < step; i++)
 //     {
 //         mlx_pixel_put(game->mlx, game->win, x, y, color);
@@ -59,114 +66,40 @@ static t_game init_game()
 //     }
 // }
 
-static void drawLine(t_game *game, float angle)
+
+
+
+static void drawLine(t_game *game, double angle)
 {
-    float beginx = game->pl.x + 16 / 2;
-    float beginy = game->pl.y + 16 / 2;
-    float endx = beginx;
-    float endy = beginy;
+    double beginx = game->pl.x + 16 / 2;
+    double beginy = game->pl.y + 16 / 2;
+    t_fVector endPoint;
+    double endx = beginx;
+    double endy = beginy;
 
-    float ang = angle;
+    double ang = angle;
 
-    float dx, dy, x1, y1, x2, y2;
-    float x0, y0;
-    float distV, distH;
+    double dx, dy, x1, y1, x2, y2;
+    double x0, y0;
+    double distV, distH;
 
-    if (ang > PI / 2 && ang < 3 * PI / 2) // looking left
-    {
-        x1 = ((int)beginx / 64) * 64 - 0.0001; // -0.0001 to detect the wall from map index or it will never detect the wall
-        y1 = beginy - (beginx - x1) * tan(ang); 
-        x0 = -64; // goind left so x0 is -64
-        y0 = -64 * tan(ang);
-    }
-    else if (ang < PI / 2 || ang > 3 * PI / 2) // looking right
-    {
-        x1 = ((int)beginx / 64) * 64 + 64; // ((int)beginx / 64) * 64 gives us the closest left wall so we add 64 to get the closest right wall
-        y1 = beginy - (beginx - x1) * tan(ang);
-        x0 = 64; // goind right so x0 is 64
-        y0 = 64 * tan(ang);
-    }
-    for (int i = 0; i < 10; i++) // 10 TILE is the max distance our ray can travel
-    {
-        if((int)y1 / 64 < 0 || (int)y1 / 64 > mapHeight || (int)x1 / 64 < 0 || (int)x1 / 64 > mapWidth) // if we are out of the map
-            break;
-        if (map[(int)y1 / 64][(int)x1 / 64] == 1) // if we hit a wall
-            break;
-        x1 += x0;
-        y1 += y0; 
-    }
-    // drawDebug(beginx, beginy, x1, y1, game, 0x0000ff);
+    rayCasting(game, &endPoint, angle);
 
-    distV = sqrt(pow(x1 - game->pl.x, 2) + pow(y1 - game->pl.y, 2)); // distance from the player to the Vertical wall
-
-    if (ang > 0 && ang < PI) // looking down
-    {
-        y2 = ((int)beginy / 64) * 64 + 64; // ((int)beginy / 64) * 64 gives us the closest up wall so we add 64 to get the closest down wall
-        x2 = beginx - (beginy - y2) / tan(ang); 
-        y0 = 64; // goind down so y0 is 64
-        x0 = 64 / tan(ang);
-    }
-    else if (ang > PI && ang < 2 * PI) // looking up
-    {
-        y2 = ((int)beginy / 64) * 64 - 0.0001; // -0.0001 to detect the wall from map index or it will never detect the wall
-        x2 = beginx - (beginy - y2) / tan(ang);
-        y0 = -64; // goind up so y0 is -64
-        x0 = -64 / tan(ang);
-    }
-    for (int i = 0; i < 10; i++) // 10 TILE is the max distance our ray can travel
-    {
-        if((int)y2 / 64 < 0 || (int)y2 / 64 > mapHeight || (int)x2 / 64 < 0 || (int)x2 / 64 > mapWidth)
-            break;
-        if (map[(int)y2 / 64][(int)x2 / 64] == 1)
-            break;
-        x2 += x0;
-        y2 += y0;
-    }
-    // drawDebug(beginx, beginy, x2, y2, game, 0xff00ff);
-
-    distH = sqrt(pow(x2 - game->pl.x, 2) + pow(y2 - game->pl.y, 2));    // distance from the player to the Horizontal wall
-
-    if(distV < distH)
-    {
-        endx = x1;
-        endy = y1;
-    }
-    else
-    {
-        endx = x2;
-        endy = y2;
-    }
-
-    float x = beginx;
-    float y = beginy;
-    float step = fabs(endx - beginx);
+    endx = endPoint.x;
+    endy = endPoint.y;
+    double x = beginx;
+    double y = beginy;
+    double step = fabs(endx - beginx);
     if (fabs(endy - beginy) > step)
         step = fabs(endy - beginy);
-    float xInc = (endx - beginx) / step;
-    float yInc = (endy - beginy) / step;
+    double xInc = (endx - beginx) / step;
+    double yInc = (endy - beginy) / step;
     for (int i = 0; i < step; i++)
     {
         mlx_pixel_put(game->mlx, game->win, x, y, 0xff00ff);
         x += xInc;
         y += yInc;
     }
-
-    // float dx = 64 * cos(game->pl.angle);
-    // float dy = 64 * sin(game->pl.angle);
-    // float px = game->pl.x+8;
-    // float py = game->pl.y+8;
-    // if (game->pl.angle > 0 && game->pl.angle < PI / 2)
-    //     for (float i = px+dx, j = py + dy; i > px && j > py; i -= 1*cos(game->pl.angle), j -= 1*sin(game->pl.angle))
-    //         mlx_pixel_put(game->mlx, game->win, i, j, 0xff0000);
-    // else if (game->pl.angle > PI / 2 && game->pl.angle < PI)
-    //     for (float i = px+dx, j = py + dy; i < px && j > py; i -= 1*cos(game->pl.angle), j -= 1*sin(game->pl.angle))
-    //         mlx_pixel_put(game->mlx, game->win, i, j, 0xff0000);
-    // else if (game->pl.angle > PI && game->pl.angle < 3 * PI / 2)
-    //     for (float i = px+dx, j = py + dy; i < px && j < py; i -= 1*cos(game->pl.angle), j -= 1*sin(game->pl.angle))
-    //         mlx_pixel_put(game->mlx, game->win, i, j, 0xff0000);
-    // else if (game->pl.angle > 3 * PI / 2 && game->pl.angle < 2 * PI)
-    //     for (float i = px+dx, j = py + dy; i > px && j < py; i -= 1*cos(game->pl.angle), j -= 1*sin(game->pl.angle))
-    //         mlx_pixel_put(game->mlx, game->win, i, j, 0xff0000);
 }
 
 static void cub_update(void *param)
@@ -176,13 +109,7 @@ static void cub_update(void *param)
     g = param;
 }
 
-// static int rayCasting(void *_game)
-// {
-//     t_game *game = _game;
-//     drawMap(game);
-//     drawPlayer(game);
-//     return (1);
-// }
+
 
 static int drawPlayer(void *_game)
 {
@@ -203,17 +130,17 @@ static int drawPlayer(void *_game)
     }
     for (int i = 0; i < FOV; i++)
     {
-        drawLine(game, game->pl.angle + ((i / 2) * PI / 180));
-        drawLine(game, game->pl.angle - ((i / 2) * PI / 180));
+        drawLine(game, game->pl.angle + ((i / 2) * (PI / 180)));
+        drawLine(game, game->pl.angle - ((i / 2) * (PI / 180)));
     }
     return (1);
 }
 
 static int drawMap(t_game *game)
 {
-    for (int i = 0; i < mapHeight; ++i)
+    for (int i = 0; i < MAP_HEIGHT; ++i)
     {
-        for (int j = 0; j < mapWidth; j++)
+        for (int j = 0; j < MAP_WIDTH; j++)
         {
             if (map[i][j] == 1)
             {

@@ -4,17 +4,21 @@
 #include <mlx.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+
+#define MAP_HEIGHT 10
+#define MAP_WIDTH 10
 
 
 typedef struct s_player
 {
-    float x;
-    float y;
-    float speed;
-    float direction;
-    float angle;
-    float dx;
-    float dy;
+    double x;
+    double y;
+    double speed;
+    double direction;
+    double angle;
+    double dx;
+    double dy;
 } t_player;
 
 typedef struct s_img
@@ -45,6 +49,23 @@ typedef struct s_game
     t_img img;
     void* floor;
     void* wall;
+    int **map;
 } t_game;
+
+typedef struct s_fVector
+{
+    double x;
+    double y;
+} t_fVector;
+
+typedef struct s_iVector
+{
+    int x;
+    int y;
+} t_iVector;
+
+
+
+void rayCasting(const t_game *game, t_fVector *endPoint, double angle);
 
 #endif
