@@ -112,7 +112,7 @@ static void drawLine(t_game *game, double angle)
     }
 
 	double wall_height = (int)((winHeight * 50) / (dist));
-    draw3Dline(game, (fabs((game->pl.angle - ang) - (PI / 6))) * (winWidth), wall_height, 0xff00ff);
+    draw3Dline(game, (fabs((game->pl.angle - ang) - (PI / 6))) * (winWidth/2), wall_height, 0xff00ff);
 }
 
 static void cub_update(void *param)
