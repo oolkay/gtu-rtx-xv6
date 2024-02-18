@@ -9,7 +9,7 @@
 #define ESC 53
 #define PI 3.14159265359
 #define lineLen 16
-#define winWidth 640
+#define winWidth 1280
 #define winHeight 640
 #define FOV 60
 
@@ -67,7 +67,16 @@ static t_game init_game()
 // }
 
 
+static void draw3Dline(t_game *game, int x1, int y2, int color)
+{
+    x1 = (winWidth / 2) + x1;
 
+    for (int i = 0; i < y2 / 2; i++)
+    {
+        mlx_pixel_put(game->mlx, game->win, x1, winHeight / 2 + i, color);
+        mlx_pixel_put(game->mlx, game->win, x1, winHeight / 2 - i, color);
+    }
+}
 
 static void drawLine(t_game *game, double angle)
 {
@@ -76,6 +85,7 @@ static void drawLine(t_game *game, double angle)
     t_dVector endPoint;
     double endx = beginx;
     double endy = beginy;
+    double dist = 0;
 
     double ang = angle;
 
@@ -83,7 +93,7 @@ static void drawLine(t_game *game, double angle)
     double x0, y0;
     double distV, distH;
 
-    rayCasting(game, &endPoint, angle);
+    rayCasting(game, &endPoint, &dist, angle);
 
     endx = endPoint.x;
     endy = endPoint.y;
@@ -100,6 +110,9 @@ static void drawLine(t_game *game, double angle)
         x += xInc;
         y += yInc;
     }
+
+	double wall_height = (int)((winHeight * 50) / (dist));
+    draw3Dline(game, (fabs((game->pl.angle - ang) - (PI / 6))) * (winWidth), wall_height, 0xff00ff);
 }
 
 static void cub_update(void *param)
@@ -128,10 +141,11 @@ static int drawPlayer(void *_game)
             mlx_pixel_put(game->mlx, game->win, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
     }
-    for (int i = 0; i < FOV; i++)
+    drawLine(game, game->pl.angle);
+    for (int i = 1; i < (winWidth/4); i++)
     {
-        drawLine(game, game->pl.angle + ((i / 2) * (PI / 180)));
-        drawLine(game, game->pl.angle - ((i / 2) * (PI / 180)));
+        drawLine(game, game->pl.angle + (float)(i * (2 * (float)(PI / 6) / (float)(winWidth/2))));
+        drawLine(game, game->pl.angle - (float)(i * (2 * (float)(PI / 6) / (float)(winWidth/2))));
     }
     return (1);
 }
@@ -151,6 +165,14 @@ static int drawMap(t_game *game)
                 mlx_put_image_to_window(game->mlx, game->win, game->floor, j * 64, i * 64);
             }
         }
+    }
+    for (int i = winWidth/2; i < winWidth; i++)
+    {
+        for (int j = 0; j < winHeight/2; j++)
+            mlx_pixel_put(game->mlx, game->win, i, j, 0x00ff00);
+        for (int j = winHeight/2; j < winHeight; j++)
+            mlx_pixel_put(game->mlx, game->win, i, j, 0x0000ff);
+
     }
     return (1);
 }

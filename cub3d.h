@@ -66,6 +66,6 @@ typedef struct s_iVector
 
 
 
-void rayCasting(const t_game *game, t_dVector *endPoint, double angle);
+void rayCasting(const t_game *game, t_dVector *endPoint, double *dist, double angle);
 
 #endif
