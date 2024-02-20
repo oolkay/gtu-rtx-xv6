@@ -11,7 +11,8 @@
 #define lineLen 16
 #define winWidth 1280
 #define winHeight 640
-#define FOV 60
+#define FOV 30
+#define FOVrad (FOV * PI / 180)
 
 int map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -35,6 +36,7 @@ static t_game init_game()
     game.pl.angle = PI/4;
     game.pl.dx = lineLen * cos(game.pl.angle);
     game.pl.dy = lineLen * sin(game.pl.angle);
+    game.pl.angledrad = (2 * (float)FOVrad / (float)(winWidth/2));
     game.map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -112,7 +114,7 @@ static void drawLine(t_game *game, double angle)
     }
 
 	double wall_height = (int)((winHeight * 50) / (dist));
-    draw3Dline(game, (fabs((game->pl.angle - ang) - (PI / 6))) * (winWidth/2), wall_height, 0xff00ff);
+    draw3Dline(game, (fabs((game->pl.angle - ang) - FOVrad)) * (winWidth/2), wall_height, 0xff00ff - powf(1.14, dist / 7));
 }
 
 static void cub_update(void *param)
@@ -121,8 +123,6 @@ static void cub_update(void *param)
 
     g = param;
 }
-
-
 
 static int drawPlayer(void *_game)
 {
@@ -144,14 +144,15 @@ static int drawPlayer(void *_game)
     drawLine(game, game->pl.angle);
     for (int i = 1; i < (winWidth/4); i++)
     {
-        drawLine(game, game->pl.angle + (float)(i * (2 * (float)(PI / 6) / (float)(winWidth/2))));
-        drawLine(game, game->pl.angle - (float)(i * (2 * (float)(PI / 6) / (float)(winWidth/2))));
+        drawLine(game, game->pl.angle + (float)(i * game->pl.angledrad));
+        drawLine(game, game->pl.angle - (float)(i * game->pl.angledrad));
     }
     return (1);
 }
 
 static int drawMap(t_game *game)
 {
+    mlx_put_image_to_window(game->mlx, game->win, game->bg, winWidth/2, 0);
     for (int i = 0; i < MAP_HEIGHT; ++i)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
@@ -167,13 +168,6 @@ static int drawMap(t_game *game)
         }
     }
     for (int i = winWidth/2; i < winWidth; i++)
-    {
-        for (int j = 0; j < winHeight/2; j++)
-            mlx_pixel_put(game->mlx, game->win, i, j, 0x00ff00);
-        for (int j = winHeight/2; j < winHeight; j++)
-            mlx_pixel_put(game->mlx, game->win, i, j, 0x0000ff);
-
-    }
     return (1);
 }
 
@@ -214,12 +208,15 @@ int main()
 {
     t_game game = init_game();
     int x, y;
+    x = 640;
+    y = 640;
     // game.image = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &x, &y);
     game.win = mlx_new_window(game.mlx, winWidth, winHeight, "CUB3D");
 
-    void *img = mlx_xpm_file_to_image(game.mlx, "textures/bg2.xpm", &x, &y);
+    void *img = mlx_xpm_file_to_image(game.mlx, "textures/bg2.xpm",  &x, &y);
     game.floor = img;
     game.wall = mlx_xpm_file_to_image(game.mlx, "textures/wall.xpm", &x, &y);
+    game.bg = mlx_xpm_file_to_image(game.mlx, "textures/fc.xpm", &x, &y);
     drawMap(&game);
     mlx_hook(game.win, 02, 1L << 0, &movePlayer, &game);
     mlx_loop(game.mlx);

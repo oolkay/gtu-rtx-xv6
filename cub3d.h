@@ -19,6 +19,7 @@ typedef struct s_player
     double angle;
     double dx;
     double dy;
+    double angledrad;
 } t_player;
 
 typedef struct s_img
@@ -49,6 +50,7 @@ typedef struct s_game
     t_img img;
     void* floor;
     void* wall;
+    void* bg;
     int **map;
 } t_game;
 
