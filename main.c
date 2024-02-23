@@ -2,79 +2,144 @@
 #include <unistd.h>
 #include <math.h>
 
-# define A 97
-# define S 115
-# define D 100
-# define W 119
-# define ESC 65307
-# define LEFT 65361
-# define RIGHT 65363
-# define Q 113
-# define E 101
-# define M 109
-# define PI 3.14159265359
-# define deltaSabit 5
-# define TILE_SIZE 40
-# define MAP_WIDTH 600
-# define MAP_HEIGHT 600
-# define FPS 120
+#define A 0
+#define S 1
+#define D 2
+#define W 13
+#define ESC 53
+#define PI 3.14159265359
+#define lineLen 16
+#define winWidth 1280
+#define winHeight 640
+#define FOV 30
+#define FOVrad (FOV * PI / 180)
 
+int map[10][10] = {
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+    {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+    {1, 0, 0, 0, 0, 1, 0, 1, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+    {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 static t_game init_game()
 {
     t_game game;
     game.mlx = NULL;
     game.mlx = mlx_init();
-    game.pl.x = 128;
-    game.pl.y = 128;
-    game.pl.angle = 0;
-    game.pl.dx = deltaSabit * cos(game.pl.angle);
-    game.pl.dy = deltaSabit * sin(game.pl.angle);
-
-    game.keys.w = 0;
-    game.keys.a = 0;
-    game.keys.s = 0;
-    game.keys.d = 0;
-    game.keys.esc = 0;
-    game.keys.q = 0;
-    game.keys.left = 0;
-    game.keys.right = 0;
-    game.keys.e = 0;
-    game.keys.m = 0;
-
-    game.frame = 0;
+    game.pl.x = 120;
+    game.pl.y = 120;
+    game.pl.angle = PI/4;
+    game.pl.dx = lineLen * cos(game.pl.angle);
+    game.pl.dy = lineLen * sin(game.pl.angle);
+    game.pl.angledrad = (2 * (float)FOVrad / (float)(winWidth/2));
+    game.map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
+    game.img.i = mlx_new_image(game.mlx, winWidth, winHeight);
+	game.img.addr = mlx_get_data_addr(game.img.i, &game.img.bpp, \
+		&game.img.line_len, &game.img.endian);
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        game.map[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            game.map[i][j] = map[i][j];
+        }
+    }
     return game;
 }
 
-static void drawLine(t_game *game)
+static void fill_image(t_game *game, int color)
 {
-    int x = game->pl.x + 20;
-    int y = game->pl.y + 20;
-    int x1 = x + 64 * cos(game->pl.angle);
-    int y1 = y + 64 * sin(game->pl.angle);
-    int dx = abs(x1 - x);
-    int dy = abs(y1 - y);
-    int sx = x < x1 ? 1 : -1;
-    int sy = y < y1 ? 1 : -1;
-    int err = (dx > dy ? dx : -dy) / 2;
-    int e2;
-    while (1)
+    int x = 0;
+    int y = 0;
+    while (y < winHeight)
     {
-        mlx_pixel_put(game->mlx, game->win, x, y, 0x00ff00);
-        if (x == x1 && y == y1)
-            break;
-        e2 = err;
-        if (e2 > -dx)
+        x = 0;
+        while (x < winWidth)
         {
-            err -= dy;
-            x += sx;
+            my_mlx_pixel_put(&game->img, x, y, color);
+            x++;
         }
-        if (e2 < dy)
-        {
-            err += dx;
-            y += sy;
-        }
+        y++;
     }
+}
+
+// static void drawDebug(float bx, float by, float ex, float ey, t_game *game, int color)
+// {
+//     float x = bx;
+//     float y = by;
+//     if (bx == ex && by == ey)
+//         return;
+//     float step = fabs(ex - bx);
+//     if (fabs(ey - by) > step)
+//         step = fabs(ey - by);
+//     float xInc = (ex - bx) / step;
+//     float yInc = (ey - by) / step;
+//     for (int i = 0; i < step; i++)
+//     {
+//         mlx_pixel_put(game->mlx, game->win, x, y, color);
+//         x += xInc;
+//         y += yInc;
+//     }
+// }
+
+
+static void draw3Dline(t_game *game, int x1, int y2, int color)
+{
+    x1 = (winWidth / 2) + x1;
+    for (int i = 0; i < y2 / 2; i++)
+    {
+        if (x1 < 0 || x1 > winWidth)
+            break;
+        if(winHeight / 2 + i < 0 || winHeight / 2 + i > winHeight)
+            break;
+        if(winHeight / 2 - i < 0 || winHeight / 2 - i > winHeight)
+            break;
+        my_mlx_pixel_put(&game->img, x1, winHeight / 2 + i, color);
+        my_mlx_pixel_put(&game->img, x1, winHeight / 2 - i, color);
+    }
+}
+
+static void drawLine(t_game *game, float angle)
+{
+    float beginx = game->pl.x + 16 / 2;
+    float beginy = game->pl.y + 16 / 2;
+    t_dVector endPoint;
+    float endx = beginx;
+    float endy = beginy;
+    float dist = 0;
+
+    float ang = angle;
+
+    float dx, dy, x1, y1, x2, y2;
+    float x0, y0;
+    float distV, distH;
+
+    rayCasting(game, &endPoint, &dist, angle);
+
+    endx = endPoint.x;
+    endy = endPoint.y;
+    float x = beginx;
+    float y = beginy;
+    float step = fabs(endx - beginx);
+    if (fabs(endy - beginy) > step)
+        step = fabs(endy - beginy);
+    float xInc = (endx - beginx) / step;
+    float yInc = (endy - beginy) / step;
+    for (int i = 0; i < step; i++)
+    {
+        my_mlx_pixel_put(&game->img, x, y, 0xff00ff);
+        x += xInc;
+        y += yInc;
+    }
+
+	float wall_height = (int)((winHeight * 50) / (dist));
+    float wall_x = fabs((game->pl.angle - ang) - FOVrad) * (winWidth/2);
+    draw3Dline(game, wall_x, wall_height, 0xff00ff - powf(1.14, dist / 7));
 }
 
 static void cub_update(void *param)
@@ -87,134 +152,110 @@ static void cub_update(void *param)
 static int drawPlayer(void *_game)
 {
     t_game *game = _game;
-    for (int i = 0; i < TILE_SIZE; ++i)
+    for (int i = 0; i < 16; ++i)
     {
-        for (int  j = 0; j < TILE_SIZE; j++)
+        for (int j = 0; j < 16; j++)
         {
-            mlx_pixel_put(game->mlx, game->win, game->pl.x + i, game->pl.y + j, 0xff0000);
+            my_mlx_pixel_put(&game->img, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
     }
-    drawLine(game);
+    for (int i = 0; i < 16; ++i)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            my_mlx_pixel_put(&game->img, game->pl.x + i, game->pl.y + j, 0xff0000);
+        }
+    }
+    drawLine(game, game->pl.angle);
+    for (int i = 1; i < (winWidth/4); i++)
+    {
+        drawLine(game, game->pl.angle + (float)(i * game->pl.angledrad));
+        drawLine(game, game->pl.angle - (float)(i * game->pl.angledrad));
+    }
+    draw3Dline(game, 22, 50, 0xffffff);
+    mlx_put_image_to_window(game->mlx, game->win, game->img.i, 0, 0);
     return (1);
 }
 
 static int drawMap(t_game *game)
 {
-    for (int i = 0; i < MAP_HEIGHT / TILE_SIZE; ++i)
+    my_mlx_area_put(&game->img, (t_dVector){0, 0}, (t_dVector){winWidth, winHeight}, 0x0000ff);
+    mlx_put_image_to_window(game->mlx, game->win, game->bg, winWidth/2, 0);
+    for (int i = 0; i < MAP_HEIGHT; ++i)
     {
-        for (int j = 0; j < MAP_WIDTH / TILE_SIZE; j++)
+        for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mlx_put_image_to_window(game->mlx, game->win, game->image, i * TILE_SIZE, j * TILE_SIZE);
+            if (map[i][j] == 1)
+            {
+                my_mlx_area_put(&game->img, (t_dVector){j * 64, i * 64}, (t_dVector){64, 64}, 0x00ff00);
+                // mlx_put_image_to_window(game->mlx, game->win, game->wall, j * 64, i * 64);
+            }
+            else
+            {
+                my_mlx_area_put(&game->img, (t_dVector){j * 64, i * 64}, (t_dVector){64, 64}, 0x00ffff);
+                // mlx_put_image_to_window(game->mlx, game->win, game->floor, j * 64, i * 64);
+            }
         }
     }
+    for (int i = winWidth/2; i < winWidth; i++)
     return (1);
 }
 
-static int movePlayer(void *_game)
+static int movePlayer(int keycode, void *_game)
 {
     t_game *game = _game;
-    if (game->keys.w)
+    if (keycode == ESC)
+    {
+        mlx_destroy_window(game->mlx, game->win);
+        exit(0);
+    }
+    if (keycode == W)
     {
         game->pl.x += game->pl.dx;
         game->pl.y += game->pl.dy;
     }
-	if (game->keys.s)
+    if (keycode == S)
     {
         game->pl.x -= game->pl.dx;
         game->pl.y -= game->pl.dy;
     }
-    if (game->keys.a)
-    {
-        game->pl.x -= deltaSabit * cos(game->pl.angle + PI / 2);
-        game->pl.y -= deltaSabit * sin(game->pl.angle + PI / 2);
-    }
-    if (game->keys.d)
-    {
-        game->pl.x += deltaSabit * cos(game->pl.angle + PI / 2);
-        game->pl.y += deltaSabit * sin(game->pl.angle + PI / 2);
-    }
-	if (game->keys.left)
+    if (keycode == A)
     {
         game->pl.angle -= 0.1;
         if (game->pl.angle < 0)
             game->pl.angle += 2 * PI;
-        game->pl.dx = deltaSabit * cos(game->pl.angle);
-        game->pl.dy = deltaSabit * sin(game->pl.angle);
+        game->pl.dx = lineLen * cos(game->pl.angle);
+        game->pl.dy = lineLen * sin(game->pl.angle);
     }
-	if (game->keys.right)
+    if (keycode == D)
     {
         game->pl.angle += 0.1;
         if (game->pl.angle > 2 * PI)
             game->pl.angle -= 2 * PI;
-        game->pl.dx = deltaSabit * cos(game->pl.angle);
-        game->pl.dy = deltaSabit * sin(game->pl.angle);
+        game->pl.dx = lineLen * cos(game->pl.angle);
+        game->pl.dy = lineLen * sin(game->pl.angle);
     }
-}
-
-int keydown(int keycode, void *param)
-{
-    t_game *game = param;
-    if (keycode == W)
-        game->keys.w = 1;
-    if (keycode == A)
-        game->keys.a = 1;
-    if (keycode == S)
-        game->keys.s = 1;
-    if (keycode == D)
-        game->keys.d = 1;
-    if (keycode == LEFT)
-        game->keys.left = 1;
-    if (keycode == RIGHT)
-        game->keys.right = 1;
-    if (keycode == E)
-        game->keys.e = 1;
-    if (keycode == M)
-        game->keys.m = 1;
-    if (keycode == ESC || keycode == Q)
-        exit(0);
-
-    return (1);
-}
-
-int keyup(int keycode, void *param)
-{
-    t_game *game = param;
-
-    if (keycode == W)
-        game->keys.w = 0;
-    if (keycode == A)
-        game->keys.a = 0;
-    if (keycode == S)
-        game->keys.s = 0;
-    if (keycode == D)
-        game->keys.d = 0;
-    if (keycode == LEFT)
-        game->keys.left = 0;
-    if (keycode == RIGHT)
-        game->keys.right = 0;
-    return (1);
-}
-
-void myGame(t_game *g)
-{
-    if(g->frame++ % FPS == 0){
-        movePlayer(g);
-        drawMap(g);
-        drawPlayer(g);
-    }
+    drawMap(game);
+    drawPlayer(game);
 }
 
 int main()
 {
     t_game game = init_game();
-    int x , y;
-    // game.image = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &x, &y);
-    game.win = mlx_new_window(game.mlx, MAP_WIDTH, MAP_HEIGHT, "CUB3D");
 
-    void *img = mlx_xpm_file_to_image(game.mlx, "textures/bg2.xpm", &x, &y);
-    game.image = img;
-    mlx_hook(game.win, 2, 1L<<0, &keydown, &game);
-    mlx_hook(game.win, 3, 1L<<1, &keyup, &game);
-	mlx_loop_hook(game.mlx, &myGame, &game);
+    int x, y;
+    x = 640;
+    y = 640;
+    // game.image = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &x, &y);
+    game.win = mlx_new_window(game.mlx, winWidth, winHeight, "CUB3D");
+
+    mlx_put_image_to_window(game.mlx, game.win, game.img.i, 0, 0);
+
+    // void *img = mlx_xpm_file_to_image(game.mlx, "textures/bg2.xpm",  &x, &y);
+    // game.floor = img;
+    game.wall = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &x, &y);
+    game.bg = mlx_xpm_file_to_image(game.mlx, "textures/fc.xpm", &x, &y);
+    // drawMap(&game);
+    mlx_hook(game.win, 02, 1L << 0, &movePlayer, &game);
     mlx_loop(game.mlx);
 }
