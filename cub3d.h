@@ -48,6 +48,7 @@ typedef struct s_game
     void *win;
     t_player pl;
     t_img img;
+    t_img texture;
     void* floor;
     void* wall;
     void* bg;
@@ -69,6 +70,7 @@ typedef struct s_iVector
 
 
 void rayCasting(const t_game *game, t_dVector *endPoint, float *dist, float angle);
+void rayCasting2(const t_game *game, t_dVector *endPoint, float *dist, float *wall_x, float angle);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 unsigned int	my_mlx_pixel_get(t_img *data, int x, int y);
 void	my_mlx_area_put(t_img *d, t_dVector p, t_dVector dim, int c);

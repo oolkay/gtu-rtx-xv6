@@ -95,3 +95,31 @@ void rayCasting(const t_game *game, t_dVector *endPoint, float *dist, float angl
         endPoint->y = hEndPoint.y;
     }
 }
+
+void rayCasting2(const t_game *game, t_dVector *endPoint, float *dist, float *wall_x, float angle)
+{
+    t_dVector vEndPoint;
+    t_dVector hEndPoint;
+    float vRayLen;
+    float hRayLen;
+
+    verticalRayCast(game, &vEndPoint, angle);
+    horizontalRayCast(game, &hEndPoint, angle);
+    vRayLen = sqrt(pow(game->pl.x + 8 - vEndPoint.x, 2) + pow(game->pl.y + 8 - vEndPoint.y, 2));
+    hRayLen = sqrt(pow(game->pl.x + 8 - hEndPoint.x, 2) + pow(game->pl.y + 8 - hEndPoint.y, 2));
+
+    if (vRayLen < hRayLen)
+    {
+        *dist = vRayLen * cos(angle - game->pl.angle);
+        *wall_x = fmod(vEndPoint.y, 64);
+        endPoint->x = vEndPoint.x;
+        endPoint->y = vEndPoint.y;
+    }
+    else
+    {
+        *dist = hRayLen * cos(angle - game->pl.angle);
+        *wall_x = fmod(hEndPoint.x, 64);
+        endPoint->x = hEndPoint.x;
+        endPoint->y = hEndPoint.y;
+    }
+}

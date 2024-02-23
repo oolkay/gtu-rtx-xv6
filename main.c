@@ -47,9 +47,16 @@ static t_game init_game()
     game.pl.dy = lineLen * sin(game.pl.angle);
     game.pl.angledrad = (2 * (float)FOVrad / (float)(winWidth/2));
     game.map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
+
     game.img.i = mlx_new_image(game.mlx, winWidth, winHeight);
 	game.img.addr = mlx_get_data_addr(game.img.i, &game.img.bpp, \
 		&game.img.line_len, &game.img.endian);
+    
+    game.texture.i = mlx_xpm_file_to_image(game.mlx, "textures/wall_1.xpm", &game.texture.width, &game.texture.height);
+    game.texture.addr = mlx_get_data_addr(game.texture.i, &game.texture.bpp, \
+        &game.texture.line_len, &game.texture.endian);
+        
+    
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
         game.map[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
@@ -96,6 +103,25 @@ static void fill_image(t_game *game, int color)
 //     }
 // }
 
+static void draw3Dline_asset(t_game *game, int x1, int y2, int color, float wall_x)
+{
+    x1 = (winWidth / 2) + x1;
+    int step = game->texture.height / y2;
+    int tex_x = (int)(wall_x * (game->texture.width) / (2 * 64));
+    for (int i = 0; i < y2 / 2; i++)
+    {
+        if (x1 < 0 || x1 > winWidth)
+            break;
+        if(winHeight / 2 + i < 0 || winHeight / 2 + i > winHeight)
+            break;
+        if(winHeight / 2 - i < 0 || winHeight / 2 - i > winHeight)
+            break;
+        int tex_y = ((y2 / 2) - i) * step;
+        int color = *(int *)(game->texture.addr + (tex_y * game->texture.line_len + tex_x * (game->texture.bpp / 8)));
+        my_mlx_pixel_put(&game->img, x1, winHeight / 2 + i, color);
+        my_mlx_pixel_put(&game->img, x1, winHeight / 2 - i, color);
+    }
+}
 
 static void draw3Dline(t_game *game, int x1, int y2, int color)
 {
@@ -111,6 +137,45 @@ static void draw3Dline(t_game *game, int x1, int y2, int color)
         my_mlx_pixel_put(&game->img, x1, winHeight / 2 + i, color);
         my_mlx_pixel_put(&game->img, x1, winHeight / 2 - i, color);
     }
+}
+
+static void drawLine2(t_game *game, float angle, int ray_index)
+{
+    float beginx = game->pl.x + 16 / 2;
+    float beginy = game->pl.y + 16 / 2;
+    t_dVector endPoint;
+    float endx = beginx;
+    float endy = beginy;
+    float dist = 0;
+
+    float ang = angle;
+
+    float dx, dy, x1, y1, x2, y2;
+    float x0, y0;
+    float distV, distH;
+    float wall_x;
+
+    rayCasting2(game, &endPoint, &dist, &wall_x, angle);
+
+    endx = endPoint.x;
+    endy = endPoint.y;
+    float x = beginx;
+    float y = beginy;
+    float step = fabs(endx - beginx);
+    if (fabs(endy - beginy) > step)
+        step = fabs(endy - beginy);
+    float xInc = (endx - beginx) / step;
+    float yInc = (endy - beginy) / step;
+    for (int i = 0; i < step; i++)
+    {
+        my_mlx_pixel_put(&game->img, x, y, 0xff00ff);
+        x += xInc;
+        y += yInc;
+    }
+
+	float wall_height = (int)((winHeight * 50) / (dist));
+    draw3Dline_asset(game, ray_index, wall_height, 0xff00ff - powf(1.14, dist / 7), wall_x);
+
 }
 
 static void drawLine(t_game *game, float angle, int ray_index)
@@ -176,9 +241,8 @@ static int drawPlayer(void *_game)
     }
     for (int i = 0; i < (winWidth/2); i++)
     {
-        drawLine(game, game->pl.angle - FOVrad + (float)(i * game->pl.angledrad), i);
+        drawLine2(game, game->pl.angle - FOVrad + (float)(i * game->pl.angledrad), i);
     }
-    draw3Dline(game, 22, 50, 0xffffff);
     mlx_put_image_to_window(game->mlx, game->win, game->img.i, 0, 0);
     return (1);
 }
