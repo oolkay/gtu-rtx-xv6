@@ -1,7 +1,11 @@
 SRC = main.c
 
-LMLX = -framework OpenGL -framework AppKit -lm
+LMLX = -lmlx -lXext -lX11 -lm
+
+ifeq ($(UNAME), Macos)
+	LMLX = mlx/libmlx.a -framework OpenGL -framework AppKit -lm
+endif
 
 all:
-	gcc main.c ray_casting.c my_mlx.c mlx/libmlx.a ${LMLX} -o cub3d
+	gcc main.c ray_casting.c my_mlx.c ${LMLX} -o cub3d
 	./cub3d

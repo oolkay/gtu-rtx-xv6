@@ -2,11 +2,20 @@
 #include <unistd.h>
 #include <math.h>
 
+#define Macos 0
+
 #define A 0
 #define S 1
 #define D 2
 #define W 13
+
+#define AL 97
+#define SL 115
+#define DL 100
+#define WL 119
+
 #define ESC 53
+
 #define PI 3.14159265359
 #define lineLen 16
 #define winWidth 1280
@@ -104,7 +113,7 @@ static void draw3Dline(t_game *game, int x1, int y2, int color)
     }
 }
 
-static void drawLine(t_game *game, float angle)
+static void drawLine(t_game *game, float angle, int ray_index)
 {
     float beginx = game->pl.x + 16 / 2;
     float beginy = game->pl.y + 16 / 2;
@@ -138,8 +147,7 @@ static void drawLine(t_game *game, float angle)
     }
 
 	float wall_height = (int)((winHeight * 50) / (dist));
-    float wall_x = fabs((game->pl.angle - ang) - FOVrad) * (winWidth/2);
-    draw3Dline(game, wall_x, wall_height, 0xff00ff - powf(1.14, dist / 7));
+    draw3Dline(game, ray_index, wall_height, 0xff00ff - powf(1.14, dist / 7));
 }
 
 static void cub_update(void *param)
@@ -166,11 +174,9 @@ static int drawPlayer(void *_game)
             my_mlx_pixel_put(&game->img, game->pl.x + i, game->pl.y + j, 0xff0000);
         }
     }
-    drawLine(game, game->pl.angle);
-    for (int i = 1; i < (winWidth/4); i++)
+    for (int i = 0; i < (winWidth/2); i++)
     {
-        drawLine(game, game->pl.angle + (float)(i * game->pl.angledrad));
-        drawLine(game, game->pl.angle - (float)(i * game->pl.angledrad));
+        drawLine(game, game->pl.angle - FOVrad + (float)(i * game->pl.angledrad), i);
     }
     draw3Dline(game, 22, 50, 0xffffff);
     mlx_put_image_to_window(game->mlx, game->win, game->img.i, 0, 0);
@@ -179,8 +185,9 @@ static int drawPlayer(void *_game)
 
 static int drawMap(t_game *game)
 {
-    my_mlx_area_put(&game->img, (t_dVector){0, 0}, (t_dVector){winWidth, winHeight}, 0x0000ff);
-    mlx_put_image_to_window(game->mlx, game->win, game->bg, winWidth/2, 0);
+    my_mlx_area_put(&game->img, (t_dVector){winWidth/2, 0}, (t_dVector){winWidth, winHeight}, 0x0000ff);
+    // mlx_put_image_to_window(game->mlx, game->win, game->bg, winWidth/2, 0);
+    //mlx_img_to_img((int[2]){0, 0}, (t_img[2]){game->bg, &game->img}, 0x0000ff);
     for (int i = 0; i < MAP_HEIGHT; ++i)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
@@ -192,7 +199,7 @@ static int drawMap(t_game *game)
             }
             else
             {
-                my_mlx_area_put(&game->img, (t_dVector){j * 64, i * 64}, (t_dVector){64, 64}, 0x00ffff);
+                my_mlx_area_put(&game->img, (t_dVector){j * 64, i * 64}, (t_dVector){64, 64}, 0x0000ff);
                 // mlx_put_image_to_window(game->mlx, game->win, game->floor, j * 64, i * 64);
             }
         }
@@ -209,17 +216,17 @@ static int movePlayer(int keycode, void *_game)
         mlx_destroy_window(game->mlx, game->win);
         exit(0);
     }
-    if (keycode == W)
+    if ((Macos && keycode == W) || (!Macos && keycode == WL))
     {
         game->pl.x += game->pl.dx;
         game->pl.y += game->pl.dy;
     }
-    if (keycode == S)
+    if ((Macos && keycode == S) || (!Macos && keycode == SL))
     {
         game->pl.x -= game->pl.dx;
         game->pl.y -= game->pl.dy;
     }
-    if (keycode == A)
+    if ((Macos && keycode == A) || (!Macos && keycode == AL))
     {
         game->pl.angle -= 0.1;
         if (game->pl.angle < 0)
@@ -227,7 +234,7 @@ static int movePlayer(int keycode, void *_game)
         game->pl.dx = lineLen * cos(game->pl.angle);
         game->pl.dy = lineLen * sin(game->pl.angle);
     }
-    if (keycode == D)
+    if ((Macos && keycode == D) || (!Macos && keycode == DL))
     {
         game->pl.angle += 0.1;
         if (game->pl.angle > 2 * PI)
