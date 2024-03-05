@@ -1,0 +1,20 @@
+NO ./textures/wall_north.xpm
+SO ./textures/wall_south.xpm
+WE ./textures/wall_west.xpm
+EA ./textures/wall_east.xpm
+CO ./textures/coin1.xpm ./textures/coin2.xpm ./textures/coin3.xpm ./textures/coin4.xpm ./textures/coin5.xpm ./textures/coin6.xpm
+DO ./textures/door1.xpm ./textures/door2.xpm ./textures/door3.xpm ./textures/door4.xpm ./textures/door5.xpm ./textures/door6.xpm ./textures/door7.xpm ./textures/door8.xpm ./textures/door9.xpm ./textures/door10.xpm
+
+F 255,255,132
+C 0,0,32
+
+11111111
+1000CCE1
+10100CC1
+10000001 111
+10100001 101
+10300001 111
+10100001
+10200001
+10100001
+11111111
