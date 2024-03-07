@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:40:53 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/02 17:02:16 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:44:38 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # define NO_MASK 0
 
 # define FOV 60
-# define ROT_SPEED 0.1
+# define ROT_SPEED 0.025
 # define OFF_SET 0.5
-# define SPEED 0.1
+# define SPEED 0.025
 
 # define WIDTH 800
 # define HEIGHT 800

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_draw_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/02 17:10:24 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/07 18:41:20 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	ft_draw_wall(t_data *data, t_render *render, int x)
 	}
 	while (y < y_end && y < HEIGHT)
 	{
-		// data->mlx.img.get_addr[y * WIDTH + x] = 0xFFFFFF - render->distance * 1000;
-		ft_draw_pixel(data, x, y, render);
+		data->mlx.img.get_addr[y * WIDTH + x] = 0xFFAABB;
+		// ft_draw_pixel(data, x, y, render);
 		(render->y_tex)++;
 		y++;
 	}

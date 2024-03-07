@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_render.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:37:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/02 17:12:20 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:48:59 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_render(t_data *data)
 	while (i < WIDTH)
 	{
 		r.angle = rang + ((float)i * ANGLE_RAD);
+		// printf("angle: %f.2\n", r.angle);
 		find_hit(data, &r);
 		r.wall_height = HEIGHT / r.distance;
 		ft_draw_wall(data, &r, i);
@@ -69,11 +70,13 @@ static void find_hit(t_data *data, t_render *r)
     if (vRayLen < hRayLen)
     {
         r->distance = vRayLen * fabs(cos(r->angle - data->player.angle));
+		r->wall_hit = vEndPoint;
         r->y_tex = vEndPoint.y - (int)vEndPoint.y;
     }
     else
     {
 		r->distance = hRayLen * fabs(cos(r->angle - data->player.angle));
+		r->wall_hit = hEndPoint;
 		r->y_tex = hEndPoint.x - (int)hEndPoint.x;
     }
 }
