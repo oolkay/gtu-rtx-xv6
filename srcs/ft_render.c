@@ -42,10 +42,10 @@ void	ft_render(t_data *data)
 {
 	t_render	r;
 	int i = 0;
-	float rang = data->player.angle - (FOV / 2);
+	float rang = data->player.angle - (((float)(FOV * PI / 180)) / 2);
 	while (i < WIDTH)
 	{
-		r.angle = rang + (i * ANGLE_RAD);
+		r.angle = rang + ((float)i * ANGLE_RAD);
 		find_hit(data, &r);
 		r.wall_height = HEIGHT / r.distance;
 		ft_draw_wall(data, &r, i);
@@ -68,15 +68,14 @@ static void find_hit(t_data *data, t_render *r)
 
     if (vRayLen < hRayLen)
     {
-        r->distance = vRayLen;
-        r->y_tex = fmod(vEndPoint.y, 64);
+        r->distance = vRayLen * fabs(cos(r->angle - data->player.angle));
+        r->y_tex = vEndPoint.y - (int)vEndPoint.y;
     }
     else
     {
-		r->distance = hRayLen;
-		r->y_tex = fmod(hEndPoint.x, 64);
+		r->distance = hRayLen * fabs(cos(r->angle - data->player.angle));
+		r->y_tex = hEndPoint.x - (int)hEndPoint.x;
     }
-	printf("yavasla biraz amkk %f %f\n", vEndPoint.y, hEndPoint.y);
 }
 
 static int isInMap(const t_data *data, float x, float y)
@@ -101,7 +100,7 @@ static void horizontalRayCast(const t_data *data, t_coordinates *endPoint, t_ren
 		endPoint->y = (int)(data->player.pos.y + 0.5) - 0.0001;
 		step.y *= -1;
 	}
-	scale = fabs((endPoint->y - (data->player.pos.y + 0.5) / tan(r->angle)));
+	scale = fabs(((endPoint->y - (data->player.pos.y + 0.5)) / tan(r->angle)));
 	step.x = step.y / tan(r->angle);
 	if (cos(r->angle) > 0)
 		endPoint->x = data->player.pos.x + 0.5 + scale;
@@ -128,7 +127,7 @@ static void verticalRayCast(const t_data *data, t_coordinates *endPoint, t_rende
 		step.x *= -1;
 	}
 	step.y = step.x * tan(r->angle);
-	scale = fabs((endPoint->x - (data->player.pos.x + 0.5) * tan(r->angle)));
+	scale = fabs(((endPoint->x - (data->player.pos.x + 0.5)) * tan(r->angle)));
 	if (sin(r->angle) > 0)
 		endPoint->y = data->player.pos.y + 0.5 + scale;
 	else

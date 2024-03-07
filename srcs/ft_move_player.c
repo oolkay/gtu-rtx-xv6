@@ -43,10 +43,10 @@ void	ft_move_player(t_data *data)
 		return ;
 	new_pos.x = data->player.pos.x + data->player.dir.x * SPEED;
 	if (!ft_strchr("1",
-			data->map.map[(int)data->player.pos.y][(int)new_pos.x]))
+			data->map.map[(int)((data->player.pos.y))][(int)(new_pos.x)]))
 		data->player.pos.x = new_pos.x;
 	new_pos.y = data->player.pos.y + data->player.dir.y * SPEED;
 	if (!ft_strchr("1",
-			data->map.map[(int)new_pos.y][(int)data->player.pos.x]))
+			data->map.map[(int)(new_pos.y)][(int)(data->player.pos.x)]))
 		data->player.pos.y = new_pos.y;
 }

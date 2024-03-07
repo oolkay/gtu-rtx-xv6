@@ -31,7 +31,7 @@
 
 # define PI 3.14159265358979323846
 
-# define ANGLE_RAD (2 * (float)(FOV * PI / 180) / (float)(WIDTH))
+# define ANGLE_RAD ((float)(FOV * PI / 180) / (float)(WIDTH))
 
 # define F_C_COLOR_DEF -255
 

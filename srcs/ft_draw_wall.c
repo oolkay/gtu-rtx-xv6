@@ -66,8 +66,8 @@ void	ft_draw_wall(t_data *data, t_render *render, int x)
 	}
 	while (y < y_end && y < HEIGHT)
 	{
-		data->mlx.img.get_addr[y * WIDTH + x] = 0xFF0000;
-		// ft_draw_pixel(data, x, y, render);
+		// data->mlx.img.get_addr[y * WIDTH + x] = 0xFFFFFF - render->distance * 1000;
+		ft_draw_pixel(data, x, y, render);
 		(render->y_tex)++;
 		y++;
 	}
