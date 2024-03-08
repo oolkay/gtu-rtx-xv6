@@ -72,12 +72,14 @@ static void find_hit(t_data *data, t_render *r)
         r->distance = vRayLen * fabs(cos(r->angle - data->player.angle));
 		r->wall_hit = vEndPoint;
         r->y_tex = vEndPoint.y - (int)vEndPoint.y;
+		r->direction = 'v';
     }
     else
     {
 		r->distance = hRayLen * fabs(cos(r->angle - data->player.angle));
 		r->wall_hit = hEndPoint;
 		r->y_tex = hEndPoint.x - (int)hEndPoint.x;
+		r->direction = 'h';
     }
 }
 

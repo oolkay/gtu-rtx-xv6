@@ -41,8 +41,9 @@ static	void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	else if (render->direction == 'h' && render->angle < 2.0 * M_PI)
 		img = &data->map.south;
 	else if (render->direction == 'v'
-		&& (render->angle < M_PI_2 || render->angle > M_PI_2 * 3.0))
+		&& (render->angle < M_PI_2 || render->angle > M_PI_2 * 3.0)){
 		img = &data->map.west;
+		}
 	else
 		img = &data->map.east;
 	color = ft_get_pixel_texture(*img, render);
@@ -66,8 +67,8 @@ void	ft_draw_wall(t_data *data, t_render *render, int x)
 	}
 	while (y < y_end && y < HEIGHT)
 	{
-		data->mlx.img.get_addr[y * WIDTH + x] = 0xFFAABB;
-		// ft_draw_pixel(data, x, y, render);
+		// data->mlx.img.get_addr[y * WIDTH + x] = 0xFFAABB;
+		ft_draw_pixel(data, x, y, render);
 		(render->y_tex)++;
 		y++;
 	}
