@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:33:59 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/19 15:13:00 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 char	*ft_strsjoin(char *d_line, char *buff)
 {

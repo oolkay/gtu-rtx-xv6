@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
+#include <stdio.h>
 
 static	t_coordinates	ft_y_point(t_coordinates pos, double angle)
 {
@@ -20,7 +21,7 @@ static	t_coordinates	ft_y_point(t_coordinates pos, double angle)
 	if (angle > M_PI_2 && angle < 3 * M_PI_2)
 		tmp.x += 1;
 	else
-		tmp.x -= 0.00001;
+		tmp.x -= 0.00000000001;
 	tmp.y = pos.y + (tan(angle) * (tmp.x - pos.x));
 	return (tmp);
 }
@@ -33,7 +34,7 @@ static	t_coordinates	ft_x_point(t_coordinates pos, double angle)
 	if (angle > M_PI)
 		tmp.y += 1;
 	else
-		tmp.y -= 0.00001;
+		tmp.y -= 0.00000000001;
 	tmp.x = pos.x + (tmp.y - pos.y) / tan(angle);
 	return (tmp);
 }
@@ -55,7 +56,7 @@ static t_coordinates	ft_get_intersection_point(t_data *data,
 		&& start_inter.x > 0 && start_inter.y > 0
 		&& start_inter.y < height
 		&& start_inter.x < (int)ft_strlen(data->map.map[(int)start_inter.y])
-		&& !ft_strchr("123",
+		&& !ft_strchr("1",
 			data->map.map[(int)start_inter.y][(int)start_inter.x]))
 	{
 		start_inter.x += delta.x;

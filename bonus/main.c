@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:48:42 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/19 15:15:51 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 static int	ft_arg_number_check(int argc)
 {

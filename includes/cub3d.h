@@ -45,6 +45,7 @@ void			ft_wall_dimension(t_data *data,
 					t_render *render, t_coordinates pos, double degree);
 void			ft_render(t_data *data);
 void			ft_draw_wall(t_data *data, t_render *render, int x);
+void			ft_draw_minimap(t_data *data);
 t_coordinates	ft_wall_hit(t_data *data, t_coordinates pos,
 					double angle, int *dir);
 int				ft_max(double x, double y);

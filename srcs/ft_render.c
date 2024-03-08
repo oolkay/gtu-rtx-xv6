@@ -16,28 +16,6 @@ static void find_hit(t_data *data, t_render *r);
 static void verticalRayCast(const t_data *data, t_coordinates *endPoint, t_render *r);
 static void horizontalRayCast(const t_data *data, t_coordinates *endPoint, t_render *r);
 
-static void ft_draw_floor_and_ceiling(t_data *data)
-{
-	int coordinates[2];
-
-	ft_fill_garbage(coordinates, 2);
-	while (coordinates[1] < HEIGHT)
-	{
-		coordinates[0] = 0;
-		while (coordinates[0] < WIDTH)
-		{
-			if (coordinates[1] < HEIGHT / 2 && !data->mlx.img.get_addr[coordinates[1] * WIDTH + coordinates[0]])
-				data->mlx.img.get_addr
-					[coordinates[1] * WIDTH + coordinates[0]] = data->map.ceiling_c;
-			else if (!data->mlx.img.get_addr[coordinates[1] * WIDTH + coordinates[0]])
-				data->mlx.img.get_addr
-					[coordinates[1] * WIDTH + coordinates[0]] = data->map.floor_c;
-			coordinates[0]++;
-		}
-		coordinates[1]++;
-	}
-}
-
 void	ft_render(t_data *data)
 {
 	t_render	r;
@@ -48,7 +26,7 @@ void	ft_render(t_data *data)
 		r.angle = rang + ((float)i * ANGLE_RAD);
 		// printf("angle: %f.2\n", r.angle);
 		find_hit(data, &r);
-		r.wall_height = HEIGHT / r.distance;
+		r.wall_height = HEIGHT / (1.5 * r.distance);
 		ft_draw_wall(data, &r, i);
 		i++;
 	}

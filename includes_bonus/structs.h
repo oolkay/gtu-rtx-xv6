@@ -13,6 +13,14 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_mini_map
+{
+	double	x;
+	double	y;
+	double	radius;
+	t_img	img;
+}	t_mini_map;
+
 typedef struct s_dimen
 {
 	double	width;
@@ -24,13 +32,6 @@ typedef struct s_coordinates
 	double	x;
 	double	y;
 }	t_coordinates;
-
-typedef struct s_mini_map
-{
-	double	x;
-	double	y;
-	double	radius;
-}	t_mini_map;
 
 typedef struct s_object
 {
@@ -67,7 +68,16 @@ typedef struct s_mlx
 	void	*display_connector;
 	void	*win;
 	t_img	img;
+	t_mini_map	mini_map;
 }	t_mlx;
+
+typedef struct s_sprite
+{
+	t_coordinates	screen;
+	t_coordinates	collecs;
+	t_coordinates	textures;
+	t_dimen			sprite;
+}	t_sprite;
 
 typedef struct s_render
 {
@@ -80,14 +90,6 @@ typedef struct s_render
 	double			wall_height;
 	int				y_tex;
 }	t_render;
-
-typedef struct s_sprite
-{
-	t_coordinates	screen;
-	t_coordinates	collecs;
-	t_coordinates	textures;
-	t_dimen			sprite;
-}	t_sprite;
 
 typedef struct s_player
 {
@@ -113,6 +115,7 @@ typedef struct s_map
 	int				floor_c;
 	double			depth[WIDTH];
 	t_coordinates	sprite;
+
 }	t_map;
 
 typedef struct s_data
@@ -121,5 +124,6 @@ typedef struct s_data
 	t_player		player;
 	t_map			map;
 }	t_data;
+
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 18:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:32:00 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 int	ft_matrix_len(void **arr)
 {

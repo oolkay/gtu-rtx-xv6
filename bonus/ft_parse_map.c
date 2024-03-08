@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 20:26:23 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/20 15:08:52 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 static int	ft_scan_map(t_map *map, int fd)
 {
@@ -43,7 +43,7 @@ static int	ft_scan_map(t_map *map, int fd)
 
 static int	ft_check_map_elem(char c, int *content)
 {
-	if (ft_strchr(" 0123NSEWC", c) == 0)
+	if (ft_strchr(" 01NSEW", c) == 0)
 		return (printf("Error\nInvalid map: Invalid component\n"), 0);
 	else if (c == PLAYER_N
 		|| c == PLAYER_E

@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 14:12:12 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:21:18 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/20 15:20:59 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 static void	ft_init_map(t_map *map)
 {
@@ -20,12 +20,6 @@ static void	ft_init_map(t_map *map)
 	map->east.img = NULL;
 	map->ceiling_c = F_C_COLOR_DEF;
 	map->floor_c = F_C_COLOR_DEF;
-	map->door.img = NULL;
-	map->door.frames = 0;
-	map->collec.img = NULL;
-	map->collec.frames = 0;
-	map->ll_collect = NULL;
-	map->ll_door = NULL;
 	map->map = NULL;
 }
 
@@ -56,13 +50,8 @@ static void	ft_init_player_starting_pos(t_data *data)
 				data->player.pos.x = (double)i[1] + OFF_SET;
 				data->player.pos.y = (double)i[0] + OFF_SET;
 				ft_get_player_ang(data, data->player.pos.x, data->player.pos.y);
+				return ;
 			}
-			else if (data->map.map[i[0]][i[1]] == COLLECS)
-				ll_add_head(&data->map.ll_collect,
-					ll_new(ft_create_obj(1, i[1], i[0])));
-			else if (data->map.map[i[0]][i[1]] == OPENED_DOOR)
-				ll_add_head(&data->map.ll_door, ll_new
-					(ft_create_obj(data->map.door.frames - 1, i[1], i[0])));
 			i[1]++;
 		}
 		i[0]++;

@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:09:43 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/20 15:07:19 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 static int	ft_assign_aspect(t_data *data, t_img *img, char *sp)
 {
@@ -20,25 +20,6 @@ static int	ft_assign_aspect(t_data *data, t_img *img, char *sp)
 		return (printf("Error\nInvalid texture path : [%s].\n", sp), 0);
 	img->get_addr = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->steps);
-	return (1);
-}
-
-static int	ft_assign_sprite(t_data *data, t_i_spr *spr, char **sp)
-{
-	int	i;
-	int	len;
-
-	len = ft_matrix_len((void **)sp);
-	spr->img = (t_img *)ft_calloc(len + 1, sizeof(t_img));
-	if (!spr->img)
-		return (printf("Error\nMalloc failed.\n"), 0);
-	spr->frames = len;
-	i = -1;
-	while (++i < len)
-	{
-		if (ft_assign_aspect(data, &spr->img[i], sp[i]) == 0)
-			return (0);
-	}
 	return (1);
 }
 
@@ -77,9 +58,5 @@ int	ft_assign_texture(t_data *data, char **sp)
 		return (ft_assign_color(&data->map.floor_c, sp));
 	else if (ft_strcmp(sp[0], "C") == 0)
 		return (ft_assign_color(&data->map.ceiling_c, sp));
-	else if (ft_strcmp(sp[0], "CO") == 0)
-		return (ft_assign_sprite(data, &data->map.collec, &sp[1]));
-	else if (ft_strcmp(sp[0], "DO") == 0)
-		return (ft_assign_sprite(data, &data->map.door, &sp[1]));
 	return (printf("Error\nInvalid texture information [%s].\n", sp[0]), 0);
 }

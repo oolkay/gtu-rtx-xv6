@@ -6,11 +6,11 @@
 /*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:31 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2023/08/19 14:16:36 by cbolat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/cub3d.h"
+
 
 int	ft_init_images(t_data *data)
 {
@@ -21,5 +21,6 @@ int	ft_init_images(t_data *data)
 	data->mlx.img.get_addr = (int *)mlx_get_data_addr(data->mlx.img.img,
 			&data->mlx.img.bits_per_pixel, &data->mlx.img.line_length,
 			&data->mlx.img.steps);
+	data->
 	return (1);
 }
