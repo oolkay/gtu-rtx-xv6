@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:46:51 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 14:10:44 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:07:15 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_img
+{
+	void	*img;
+	int		height;
+	int		width;
+	int		bits_per_pixel;
+	int		line_length;
+	int		steps;
+	int		*get_addr;
+}	t_img;
 
 typedef struct s_mini_map
 {
@@ -45,17 +56,6 @@ typedef struct s_list
 	void			*data;
 	struct s_list	*next;
 }	t_list;
-
-typedef struct s_img
-{
-	void	*img;
-	int		height;
-	int		width;
-	int		bits_per_pixel;
-	int		line_length;
-	int		steps;
-	int		*get_addr;
-}	t_img;
 
 typedef struct s_i_spr
 {
@@ -123,6 +123,7 @@ typedef struct s_data
 	t_mlx			mlx;
 	t_player		player;
 	t_map			map;
+    t_img           minimap;
 }	t_data;
 
 

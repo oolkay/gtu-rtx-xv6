@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_move_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:11:34 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 19:48:26 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:16:54 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	ft_update_player_direction(t_data *data)
 	// S pressed
 	if (data->player.move.y == 1)
 		angle = ft_update_radian(angle, -PI);
-	// if (data->player.move.x)
-		// angle = ft_update_radian(angle, data->player.move.x * PI / 2);
+	if (data->player.move.x)
+		angle = ft_update_radian(angle, data->player.move.x * PI / 2);
 	// if (data->player.move.x == 1)
 	// 	angle = ft_update_radian(angle, PI/2);
 	// if (data->player.move.x && data->player.move.y)

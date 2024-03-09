@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 18:09:03 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 14:12:19 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:26:04 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 int	ft_extention_check(char *str)

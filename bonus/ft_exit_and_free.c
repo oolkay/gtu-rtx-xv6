@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit_and_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:34:56 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:10:23 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:23:45 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static void	ft_clear_window(t_data *data)

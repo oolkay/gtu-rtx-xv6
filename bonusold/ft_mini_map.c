@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mini_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 17:53:06 by alcelik           #+#    #+#             */
-/*   Updated: 2023/08/20 15:01:12 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:02:48 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int	ft_is_in_map_bound(t_mini_map map, double x, double y)
 	double	dist_to_center;
 
 	dist_to_center = sqrtf(powf(x - map.x, 2) + powf(y - map.y, 2));
-	if (dist_to_center <= map.radius && dist_to_center <= map.radius - 1)
+	if (dist_to_center <= map.radius - 1)
 		return (1);
-	if (dist_to_center <= map.radius)
-		return (2);
 	return (0);
 }
 

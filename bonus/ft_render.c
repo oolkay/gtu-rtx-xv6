@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_render.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:37:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 19:48:59 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 18:47:39 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static void find_hit(t_data *data, t_render *r);
@@ -40,18 +41,45 @@ static void ft_draw_floor_and_ceiling(t_data *data)
 	}
 }
 
+void ft_draw_rays(t_data *data, t_render *render, int i)
+{
+    double beginx = WIDTH / 8;
+    double beginy = WIDTH / 8;
+    t_coordinates endp;
+
+
+
+    endp.x = render->wall_hit.x * 200 / 800 ;
+    endp.y = render->wall_hit.y / 4;
+
+    printf("%f %f %d\n", endp.x, endp.y, i);
+    double step = fabs(endp.x - beginx);
+    if (fabs(endp.y - beginy) > step)
+        step = fabs(endp.y - beginy);
+    double x_inc = (endp.x - beginx) / step;
+    double y_inc = (endp.y - beginy) / step;
+    for (int i = 0; i < step; i++)
+    {
+        data->minimap.get_addr[(int)(beginy * (WIDTH/4)) + (int)beginx] = 0xFF00FF;
+        beginx += x_inc;
+        beginy += y_inc;
+    }
+
+}
+
 void	ft_render(t_data *data)
 {
 	t_render	r;
 	int i = 0;
-	float rang = data->player.angle - (((float)(FOV * PI / 180)) / 2);
+	float rang = data->player.angle - (((float)((float)FOV * (float)PI / 180.0f)) / 2.0f);
 	while (i < WIDTH)
 	{
-		r.angle = rang + ((float)i * ANGLE_RAD);
+		r.angle = fmod(rang + ((float)i * ANGLE_RAD), 2.0f*PI);
 		// printf("angle: %f.2\n", r.angle);
 		find_hit(data, &r);
-		r.wall_height = HEIGHT / (1.5 * r.distance);
+		r.wall_height = (HEIGHT / (1.5f * r.distance));
 		ft_draw_wall(data, &r, i);
+        ft_draw_rays(data, &r, i);
 		i++;
 	}
 }
@@ -71,18 +99,19 @@ static void find_hit(t_data *data, t_render *r)
 
     if (vRayLen < hRayLen)
     {
-        r->distance = vRayLen * fabs(cos(r->angle - data->player.angle));
+        r->distance = vRayLen * cos(r->angle - data->player.angle);
 		r->wall_hit = vEndPoint;
         r->y_tex = vEndPoint.y - (int)vEndPoint.y;
 		r->direction = 'v';
     }
     else
     {
-		r->distance = hRayLen * fabs(cos(r->angle - data->player.angle));
+		r->distance = hRayLen * cos(r->angle - data->player.angle);
 		r->wall_hit = hEndPoint;
 		r->y_tex = hEndPoint.x - (int)hEndPoint.x;
 		r->direction = 'h';
     }
+    
 }
 
 static int isInMap(const t_data *data, float x, float y)

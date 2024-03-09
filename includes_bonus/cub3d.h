@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:46:57 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 19:55:50 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 18:38:37 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ void			ft_move_player(t_data *data);
 void			ft_door_sprite(t_data *data);
 void			ft_wall_dimension(t_data *data,
 					t_render *render, t_coordinates pos, double degree);
-void			ft_render(t_data *data, double degree);
-void			ft_draw_wall(t_data *data, t_list *ll_render);
+void			ft_render(t_data *data);
+void			ft_draw_wall(t_data *data, t_render *r, int i);
 void			ft_render_mini_map(t_data *data);
+void ft_draw_minimap(t_data *data);
 t_coordinates	ft_wall_hit(t_data *data, t_coordinates pos,
 					double angle, int *dir);
 int				ft_max(double x, double y);
-void			ft_draw_rays(t_data *data, t_mini_map map);
+void			ft_draw_rays(t_data *data, t_render *r, int i);
 void			ft_draw_comps(t_data *data, t_mini_map map);
 int				ft_is_in_map_bound(t_mini_map map, double x, double y);
 void			ft_open_close_door(t_data *data);

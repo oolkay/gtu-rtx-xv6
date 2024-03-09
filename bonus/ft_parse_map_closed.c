@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_map_closed.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:38:51 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:11:38 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:24:09 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d.h"
 
 static int	ft_is_component_sur(char **map, int i, int j)
 {

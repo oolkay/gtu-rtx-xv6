@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:48:42 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 15:15:51 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:11:09 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../includes_bonus/cub3d.h"
 
 static int	ft_arg_number_check(int argc)
 {
@@ -31,6 +31,7 @@ static void	ft_init_mlx(t_data *data)
 {
 	data->mlx.win = NULL;
 	data->mlx.img.img = NULL;
+    data->minimap.img = NULL;
 	data->mlx.display_connector = mlx_init();
 	if (!data->mlx.display_connector)
 	{

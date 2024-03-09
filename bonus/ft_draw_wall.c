@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_draw_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 18:41:20 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 18:25:57 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static int ft_get_pixel_texture(t_img image, t_render *render)
@@ -36,13 +37,13 @@ static void ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	t_img *img;
 	int color;
 
-	if (render->direction == 'h' && (render->angle <= (PI / 2) || render->angle >= (3 * PI / 2)))
+	if (render->direction == 'h' && (render->angle <= (PI) && render->angle >= (0)))
 		{
 			img = &data->map.north;}
 	else if (render->direction == 'h')
 		{
 			img = &data->map.south;}
-	else if (render->direction == 'v' && (render->angle <= (PI / 2) || render->angle >= (3 * PI / 2))) 
+	else if (render->direction == 'v' && (render->angle >= (PI / 2) && render->angle <= (3 * PI / 2))) 
 		img = &data->map.west;
 	else if (render->direction == 'v')
 		img = &data->map.east;
@@ -58,7 +59,7 @@ void ft_draw_wall(t_data *data, t_render *render, int x)
 	int y_end;
 
 	y_off = (HEIGHT / 2) - (render->wall_height / 2);
-	y_end = (HEIGHT / 2) + (render->wall_height / 2);
+	y_end = (HEIGHT / 2) + (render->wall_height / 2) - 1;
 	y = 0;
 	while (y < y_off)
 	{
@@ -90,7 +91,13 @@ void ft_draw_square(t_data *data, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-			data->mlx.img.get_addr[(y + i) * WIDTH + (x + j)] = color;
+            if((y + i) < (WIDTH/4) && (x + j) < (WIDTH/4))
+            {
+                if(i == 0 || j == 0 || i == size - 1 || j == size-1)
+                    data->minimap.get_addr[(y + i) * (WIDTH/4) + (x + j)] = 0xFFFFFF;
+                else
+                    data->minimap.get_addr[(y + i) * (WIDTH/4) + (x + j)] = color;
+            }  
 			j++;
 		}
 		i++;
@@ -104,26 +111,27 @@ void ft_draw_minimap(t_data *data)
 	int i;
 	int j;
 
-	x = WIDTH - 100;
-	y = HEIGHT - 100;
-	i = data->player.pos.x - 5;
-	while (i < data->player.pos.x + 5)
+	i = (data->player.pos.x + 0.5) - 5;
+	while (i < (data->player.pos.x + 0.5) + 5)
 	{
-		j = data->player.pos.y - 5;
-		while (j < data->player.pos.y + 5)
+		j = (data->player.pos.y + 0.5) - 5;
+		while (j < (data->player.pos.y + 0.5) + 5)
 		{
 			if(i >= 0 && j >= 0 && j < ft_matrix_len(data->map.map) && i < ft_strlen(data->map.map[j]))
 			{
-				if(data->map.map[j][i] == '0')
-					ft_draw_square(data, x + (i - data->player.pos.x + 5) * 10, y + (j - data->player.pos.y + 5) * 10, 10, 0x000000);
+				if(data->map.map[j][i] && data->map.map[j][i] == '0')
+					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFFFFFF);
 				else
-					ft_draw_square(data, x + (i - data->player.pos.x + 5) * 10, y + (j - data->player.pos.y + 5) * 10, 10, 0xFFFFFF);
+					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFF0000);
 			}
+            else
+				ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFFFFFF);
+                
 			j++;
 		}
 		i++;
 	}
-	ft_draw_square(data, x + 50, y + 50, 10, 0xFF0000);
+	ft_draw_square(data, WIDTH/8 - 4, WIDTH/8 - 4, 8, 0xFF0000);
 }
 
 

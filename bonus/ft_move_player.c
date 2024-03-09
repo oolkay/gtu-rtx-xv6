@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_move_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:11:34 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 19:48:26 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:24:02 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static void	ft_update_player_direction(t_data *data)

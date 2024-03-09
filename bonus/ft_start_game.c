@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_game.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:16:47 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 21:36:22 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:26:08 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d.h"
 
 static int	ft_key_press(int k_code, t_data *data)
 {

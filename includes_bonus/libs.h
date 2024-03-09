@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:46:53 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/12 12:46:54 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 14:43:47 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
-# include "../minilibx_linux/mlx.h"
+# include "../minilibx/mlx.h"
 # include "./defines.h"
 # include "./structs.h"
 # include "../libft/libft.h"

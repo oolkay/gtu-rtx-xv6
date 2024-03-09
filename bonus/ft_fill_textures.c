@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:55:57 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:07:05 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:23:52 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static int	ft_is_filled(t_map *map)

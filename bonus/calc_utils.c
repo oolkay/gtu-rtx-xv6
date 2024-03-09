@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 01:01:27 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 18:45:34 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:23:32 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../includes_bonus/cub3d.h"
 
 double	ft_distance(t_coordinates p1, t_coordinates p2)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:33:59 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 15:13:00 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:52:26 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../includes_bonus/cub3d.h"
 
 char	*ft_strsjoin(char *d_line, char *buff)
 {

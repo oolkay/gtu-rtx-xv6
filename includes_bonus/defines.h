@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:40:53 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/19 13:27:48 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:48:32 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,19 @@
 # define ON_MOUSEMOVE 6
 # define NO_MASK 0
 
-# define FOV 60
-# define ROT_SPEED 0.1
 # define COLLECT_FRAME 0.2
 # define DOOR_FRAME 1
+# define FOV 60
 # define OFF_SET 0.5
-# define SPEED 0.25
+# define SPEED 0.025
 
 # define WIDTH 800
 # define HEIGHT 800
+
+# define ANGLE_RAD ((float)((float)FOV * (float)PI / 180.0f) / (float)(WIDTH))
+# define ROT_SPEED 0.05
+
+# define PI 3.14159265358979323846
 
 # define F_C_COLOR_DEF -255
 

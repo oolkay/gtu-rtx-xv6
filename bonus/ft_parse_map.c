@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 20:26:23 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:08:52 by cbolat           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:24:05 by acepni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes_bonus/cub3d.h"
 
 
 static int	ft_scan_map(t_map *map, int fd)
