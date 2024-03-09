@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_move_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:11:34 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:16:54 by acepni           ###   ########.fr       */
+/*   Updated: 2024/03/09 21:16:36 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,16 @@ static void	ft_update_player_direction(t_data *data)
 		data->player.angle = ft_update_radian(data->player.angle, 
 			data->player.rotate * ROT_SPEED);
 	angle = data->player.angle;
-	// S pressed
-	if (data->player.move.y == 1)
+
+
+	if (data->player.move.y == S_PRESSED)
 		angle = ft_update_radian(angle, -PI);
-	if (data->player.move.x)
-		angle = ft_update_radian(angle, data->player.move.x * PI / 2);
-	// if (data->player.move.x == 1)
-	// 	angle = ft_update_radian(angle, PI/2);
-	// if (data->player.move.x && data->player.move.y)
-	// {
-	// 	angle = ft_update_radian(angle,
-	// 			PI/4);
-	// }
+	else if (data->player.move.x)
+		angle = ft_update_radian(angle, 
+			data->player.move.x * PI / 2);
+	if (data->player.move.y && data->player.move.x)
+		angle = ft_update_radian(angle, 
+		-data->player.move.x * PI / 4);
 	data->player.dir.x = cos(angle);
 	data->player.dir.y = sin(angle);
 }

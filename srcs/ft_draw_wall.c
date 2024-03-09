@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_draw_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:01:19 by acepni           ###   ########.fr       */
+/*   Updated: 2024/03/09 21:19:11 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static void ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	t_img *img;
 	int color;
 
-	if (render->direction == 'h' && (render->angle <= (PI / 2) || render->angle >= (3 * PI / 2)))
+	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
 		{
 			img = &data->map.north;}
 	else if (render->direction == 'h')
 		{
 			img = &data->map.south;}
-	else if (render->direction == 'v' && (render->angle <= (PI / 2) || render->angle >= (3 * PI / 2))) 
+	else if (render->direction == 'v' && (render->angle >= (PI / 2) || render->angle <= (3 * PI / 2))) 
 		img = &data->map.west;
 	else if (render->direction == 'v')
 		img = &data->map.east;
