@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_render.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:37:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 18:47:39 by acepni           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:55:04 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,30 @@ void ft_draw_rays(t_data *data, t_render *render, int i)
 {
     double beginx = WIDTH / 8;
     double beginy = WIDTH / 8;
+	t_coordinates offset;
     t_coordinates endp;
 
 
+	offset.x = render->wall_hit.x - data->player.pos.x;
+	offset.y = render->wall_hit.y - data->player.pos.y;
+	endp.x = (offset.x * 20) + beginx;
+	endp.y = (offset.y * 20) + beginy;
+	
 
-    endp.x = render->wall_hit.x * 200 / 800 ;
-    endp.y = render->wall_hit.y / 4;
-
-    printf("%f %f %d\n", endp.x, endp.y, i);
-    double step = fabs(endp.x - beginx);
-    if (fabs(endp.y - beginy) > step)
-        step = fabs(endp.y - beginy);
-    double x_inc = (endp.x - beginx) / step;
-    double y_inc = (endp.y - beginy) / step;
-    for (int i = 0; i < step; i++)
-    {
-        data->minimap.get_addr[(int)(beginy * (WIDTH/4)) + (int)beginx] = 0xFF00FF;
-        beginx += x_inc;
-        beginy += y_inc;
-    }
+	double step = fmax(fabs(offset.x), fabs(offset.y));
+	offset.x /= step;
+	offset.y /= step;
+	int j = 0;
+	step = step * 8;
+	while (j < step)
+	{
+		
+		data->minimap.get_addr[(int)beginy * WIDTH/4 + (int)beginx] = 0x00FF0000;
+		beginx += offset.x;
+		beginy += offset.y;
+		j++;
+	}
+	
 
 }
 

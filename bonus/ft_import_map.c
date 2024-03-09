@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_import_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 14:12:12 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:23:53 by acepni           ###   ########.fr       */
+/*   Updated: 2024/03/09 21:45:34 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	ft_init_map(t_map *map)
 static void	ft_get_player_ang(t_data *data, double x, double y)
 {
 	if (data->map.map[(int)y][(int)x] == 'N')
-		data->player.angle = M_PI_2;
+		data->player.angle = -PI/2;
 	else if (data->map.map[(int)y][(int)x] == 'S')
-		data->player.angle = M_PI_2 * 3.0;
+		data->player.angle = PI/2;
 	else if (data->map.map[(int)y][(int)x] == 'W')
-		data->player.angle = 0;
+		data->player.angle = PI;
 	else if (data->map.map[(int)y][(int)x] == 'E')
-		data->player.angle = M_PI;
+		data->player.angle = 0;
 }
 
 static void	ft_init_player_starting_pos(t_data *data)

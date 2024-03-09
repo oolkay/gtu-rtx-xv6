@@ -6,7 +6,7 @@
 /*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 21:18:48 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:09:38 by oolkay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void ft_draw_square(t_data *data, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-            if((y + i) < (WIDTH/4) && (x + j) < (WIDTH/4))
+            if((y + i) < (WIDTH/4) && (x + j) < (WIDTH/4)
+				&& ((y + i) > 0 && (x + j) > 0))
             {
                 if(i == 0 || j == 0 || i == size - 1 || j == size-1)
                     data->minimap.get_addr[(y + i) * (WIDTH/4) + (x + j)] = 0xFFFFFF;
