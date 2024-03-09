@@ -106,16 +106,10 @@ typedef struct s_map
 	t_img			south;
 	t_img			west;
 	t_img			east;
-	t_i_spr			door;
-	t_i_spr			collec;
-	t_list			*ll_door;
-	t_list			*ll_collect;
 	char			**map;
 	int				ceiling_c;
 	int				floor_c;
-	double			depth[WIDTH];
-	t_coordinates	sprite;
-
+	int 		   show_minimap;
 }	t_map;
 
 typedef struct s_data

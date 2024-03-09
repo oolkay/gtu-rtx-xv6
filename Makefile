@@ -69,7 +69,6 @@ BONUS_SRCS := ./bonus/calc_utils.c \
 		./bonus/ft_update.c \
 		./bonus/gnl_utils.c \
 		./bonus/gnl.c \
-		./bonus/list_utils.c \
 		./bonus/main.c \
 		./bonus/matrix.c
 
@@ -90,7 +89,6 @@ BONUS_OBJS := ./bonus_obj/calc_utils.o \
 		./bonus_obj/ft_update.o \
 		./bonus_obj/gnl_utils.o \
 		./bonus_obj/gnl.o \
-		./bonus_obj/list_utils.o \
 		./bonus_obj/main.o \
 		./bonus_obj/matrix.o
 

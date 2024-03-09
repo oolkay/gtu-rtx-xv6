@@ -12,11 +12,11 @@
 
 #include "../includes_bonus/cub3d.h"
 
-char	*ft_strsjoin(char *d_line, char *buff)
+char *ft_strsjoin(char *d_line, char *buff)
 {
-	size_t	i;
-	size_t	j;
-	char	*str;
+	size_t i;
+	size_t j;
+	char *str;
 
 	if (!d_line)
 	{
@@ -40,10 +40,10 @@ char	*ft_strsjoin(char *d_line, char *buff)
 	return (str);
 }
 
-char	*ft_get_line(char *d_line)
+char *ft_get_line(char *d_line)
 {
-	int		i;
-	char	*str;
+	int i;
+	char *str;
 
 	i = 0;
 	if (!d_line[i])
@@ -63,11 +63,11 @@ char	*ft_get_line(char *d_line)
 	return (str);
 }
 
-char	*ft_new_dinamic_line(char *d_line)
+char *ft_new_dinamic_line(char *d_line)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int i;
+	int j;
+	char *str;
 
 	i = 0;
 	while (d_line[i] && d_line[i] != '\n')

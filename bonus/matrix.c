@@ -12,10 +12,9 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
-int	ft_matrix_len(void **arr)
+int ft_matrix_len(void **arr)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (arr[i])
@@ -25,13 +24,13 @@ int	ft_matrix_len(void **arr)
 	return (i);
 }
 
-void	ft_free_matrix(void **arr)
+void ft_free_matrix(void **arr)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!arr)
-		return ;
+		return;
 	while (arr[i])
 	{
 		free(arr[i]);
@@ -40,11 +39,11 @@ void	ft_free_matrix(void **arr)
 	free(arr);
 }
 
-char	**ft_add_back_matrix_str(char **array, char *str)
+char **ft_add_back_matrix_str(char **array, char *str)
 {
-	char	**new_array;
-	size_t	array_len;
-	size_t	i;
+	char **new_array;
+	size_t array_len;
+	size_t i;
 
 	array_len = 0;
 	if (array)
@@ -68,9 +67,9 @@ char	**ft_add_back_matrix_str(char **array, char *str)
 	return (new_array);
 }
 
-void	ft_fill_garbage(int arr[], int size)
+void ft_fill_garbage(int arr[], int size)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < size)

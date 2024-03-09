@@ -12,7 +12,6 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
 int ft_update(t_data *data)
 {
 	ft_move_player(data);
@@ -21,7 +20,9 @@ int ft_update(t_data *data)
 	// mlx_clear_window(data->mlx.display_connector, data->mlx.win);
 	mlx_put_image_to_window(data->mlx.display_connector,
 							data->mlx.win, data->mlx.img.img, 0, 0);
-    mlx_put_image_to_window(data->mlx.display_connector,
-							data->mlx.win, data->minimap.img, WIDTH-250, HEIGHT-250);
+	if(data->map.show_minimap)
+		mlx_put_image_to_window(data->mlx.display_connector,
+							data->mlx.win, data->minimap.img, WIDTH - 250, HEIGHT - 250);
+	ft_draw_banner(data);
 	return (0);
 }

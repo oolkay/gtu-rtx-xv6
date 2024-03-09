@@ -12,7 +12,7 @@
 
 #include "../includes_bonus/cub3d.h"
 
-static int	ft_arg_number_check(int argc)
+static int ft_arg_number_check(int argc)
 {
 	if (argc < 2)
 	{
@@ -27,11 +27,11 @@ static int	ft_arg_number_check(int argc)
 	return (1);
 }
 
-static void	ft_init_mlx(t_data *data)
+static void ft_init_mlx(t_data *data)
 {
 	data->mlx.win = NULL;
 	data->mlx.img.img = NULL;
-    data->minimap.img = NULL;
+	data->minimap.img = NULL;
 	data->mlx.display_connector = mlx_init();
 	if (!data->mlx.display_connector)
 	{
@@ -40,10 +40,10 @@ static void	ft_init_mlx(t_data *data)
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_data	data;
-	int		return_val;
+	t_data data;
+	int return_val;
 
 	if (ft_arg_number_check(argc) == 0)
 		return (EXIT_FAILURE);

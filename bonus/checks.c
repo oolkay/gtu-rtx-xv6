@@ -12,10 +12,9 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
-int	ft_extention_check(char *str)
+int ft_extention_check(char *str)
 {
-	int	len;
+	int len;
 
 	len = ft_strlen(str);
 	if (len < 4)
@@ -25,9 +24,9 @@ int	ft_extention_check(char *str)
 	return (1);
 }
 
-int	ft_is_number(char *str)
+int ft_is_number(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])

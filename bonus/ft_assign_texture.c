@@ -12,22 +12,21 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
-static int	ft_assign_aspect(t_data *data, t_img *img, char *sp)
+static int ft_assign_aspect(t_data *data, t_img *img, char *sp)
 {
 	img->img = mlx_xpm_file_to_image(data->mlx.display_connector,
-			sp, &img->width, &img->height);
+									 sp, &img->width, &img->height);
 	if (!img->img)
 		return (printf("Error\nInvalid texture path : [%s].\n", sp), 0);
 	img->get_addr = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->steps);
+											 &img->line_length, &img->steps);
 	return (1);
 }
 
-static int	ft_assign_color(int *color, char **sp)
+static int ft_assign_color(int *color, char **sp)
 {
-	char	**rgb;
-	int		rgb_val[3];
+	char **rgb;
+	int rgb_val[3];
 
 	rgb = ft_split(sp[1], ',');
 	if (ft_matrix_len((void **)rgb) != 3)
@@ -38,14 +37,13 @@ static int	ft_assign_color(int *color, char **sp)
 	rgb_val[1] = ft_atoi(rgb[1]);
 	rgb_val[2] = ft_atoi(rgb[2]);
 	ft_free_matrix((void **)rgb);
-	if (rgb_val[0] < 0 || rgb_val[0] > 255 || rgb_val[1] < 0 || rgb_val[1] > 255
-		|| rgb_val[2] < 0 || rgb_val[2] > 255)
+	if (rgb_val[0] < 0 || rgb_val[0] > 255 || rgb_val[1] < 0 || rgb_val[1] > 255 || rgb_val[2] < 0 || rgb_val[2] > 255)
 		return (printf("Error\nInvalid color values [%s].\n", sp[1]), 0);
 	*color = ft_create_color(0, rgb_val[0], rgb_val[1], rgb_val[2]);
 	return (1);
 }
 
-int	ft_assign_texture(t_data *data, char **sp)
+int ft_assign_texture(t_data *data, char **sp)
 {
 	if (ft_strcmp(sp[0], "NO") == 0)
 		return (ft_assign_aspect(data, &data->map.north, sp[1]));

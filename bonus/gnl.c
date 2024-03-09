@@ -12,10 +12,9 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
-char	*ft_strchsr(char *s, int c)
+char *ft_strchsr(char *s, int c)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!s)
@@ -31,10 +30,10 @@ char	*ft_strchsr(char *s, int c)
 	return (0);
 }
 
-char	*ft_read_left_to_right(int fd, char *d_line)
+char *ft_read_left_to_right(int fd, char *d_line)
 {
-	char	*buff;
-	int		rd_bytes;
+	char *buff;
+	int rd_bytes;
 
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
@@ -55,10 +54,10 @@ char	*ft_read_left_to_right(int fd, char *d_line)
 	return (d_line);
 }
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	char		*current_line;
-	static char	*d_line;
+	char *current_line;
+	static char *d_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);

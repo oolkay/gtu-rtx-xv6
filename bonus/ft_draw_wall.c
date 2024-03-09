@@ -12,7 +12,6 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
 static int ft_get_pixel_texture(t_img image, t_render *render)
 {
 	int tx;
@@ -38,12 +37,14 @@ static void ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	int color;
 
 	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
-		{
-			img = &data->map.north;}
+	{
+		img = &data->map.north;
+	}
 	else if (render->direction == 'h')
-		{
-			img = &data->map.south;}
-	else if (render->direction == 'v' && (render->angle >= (PI / 2) && render->angle <= (3 * PI / 2))) 
+	{
+		img = &data->map.south;
+	}
+	else if (render->direction == 'v' && (render->angle >= (PI / 2) && render->angle <= (3 * PI / 2)))
 		img = &data->map.west;
 	else if (render->direction == 'v')
 		img = &data->map.east;
@@ -91,14 +92,13 @@ void ft_draw_square(t_data *data, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-            if((y + i) < (WIDTH/4) && (x + j) < (WIDTH/4)
-				&& ((y + i) > 0 && (x + j) > 0))
-            {
-                if(i == 0 || j == 0 || i == size - 1 || j == size-1)
-                    data->minimap.get_addr[(y + i) * (WIDTH/4) + (x + j)] = 0xFFFFFF;
-                else
-                    data->minimap.get_addr[(y + i) * (WIDTH/4) + (x + j)] = color;
-            }  
+			if ((y + i) < (WIDTH / 4) - 1 && (x + j) < (WIDTH / 4) - 1 && ((y + i) > 0 && (x + j) > 0))
+			{
+				if (i == 0 || j == 0 || i == size - 1 || j == size - 1)
+					data->minimap.get_addr[(y + i) * (WIDTH / 4) + (x + j)] = 0xFFFFFF;
+				else
+					data->minimap.get_addr[(y + i) * (WIDTH / 4) + (x + j)] = color;
+			}
 			j++;
 		}
 		i++;
@@ -107,8 +107,6 @@ void ft_draw_square(t_data *data, int x, int y, int size, int color)
 
 void ft_draw_minimap(t_data *data)
 {
-	int x;
-	int y;
 	int i;
 	int j;
 
@@ -118,61 +116,19 @@ void ft_draw_minimap(t_data *data)
 		j = (data->player.pos.y + 0.5) - 5;
 		while (j < (data->player.pos.y + 0.5) + 5)
 		{
-			if(i >= 0 && j >= 0 && j < ft_matrix_len(data->map.map) && i < ft_strlen(data->map.map[j]))
+			if (i >= 0 && j >= 0 && j < ft_matrix_len(data->map.map) && i < ft_strlen(data->map.map[j]))
 			{
-				if(data->map.map[j][i] && data->map.map[j][i] == '0')
-					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFFFFFF);
+				if (data->map.map[j][i] && ft_strchr("0NSWE", data->map.map[j][i]))
+					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH / 40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH / 40), (WIDTH / 40), 0xFFFFFF);
 				else
-					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFF0000);
+					ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH / 40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH / 40), (WIDTH / 40), 0xFF0000);
 			}
-            else
-				ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH/40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH/40), (WIDTH/40), 0xFFFFFF);
-                
+			else
+				ft_draw_square(data, (i - (data->player.pos.x + 0.5) + 5) * (WIDTH / 40), (j - (data->player.pos.y + 0.5) + 5) * (WIDTH / 40), (WIDTH / 40), 0xFFFFFF);
+
 			j++;
 		}
 		i++;
 	}
-	ft_draw_square(data, WIDTH/8 - 4, WIDTH/8 - 4, 8, 0xFF0000);
+	ft_draw_square(data, WIDTH / 8 - 4, WIDTH / 8 - 4, 8, 0xFF0000);
 }
-
-
-// void	ft_draw_wall(t_data *data, t_list *ll_render)
-// {
-// 	int			x;
-// 	int			y;
-// 	t_render	*render;
-
-// 	while (ll_render)
-// 	{
-// 		render = ll_render->data;
-// 		render->y_tex = 0;
-// 		y = (HEIGHT / 2) - (render->wall_dimen.height / 2);
-// 		for (int i = 0; i < y; i++)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			data->mlx.img.get_addr[i * WIDTH + x] = data->map.ceiling_c;
-// 			data->mlx.img.get_addr[i * WIDTH + x + 1] = data->map.ceiling_c;
-// 		}
-
-// 		while (y < (HEIGHT / 2) + (render->wall_dimen.height / 2) && y < HEIGHT)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			while (x < ((render->degree / ROT_SPEED) * render->wall_dimen.width)
-// 				+ render->wall_dimen.width && x < WIDTH){
-// 				// if (!data->mlx.img.get_addr[y * WIDTH + x])
-// 					ft_draw_pixel(data, x, y, render);
-// 				x++;
-// 			}
-// 			(render->y_tex)++;
-// 			y++;
-// 		}
-// 		for (int i = y; i < HEIGHT; i++)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			data->mlx.img.get_addr[i * WIDTH + x] = data->map.floor_c;
-// 			data->mlx.img.get_addr[i * WIDTH + x + 1] = data->map.floor_c;
-
-// 		}
-// 		ll_render = ll_render->next;
-// 	}
-// }

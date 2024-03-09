@@ -12,11 +12,10 @@
 
 #include "../includes_bonus/cub3d.h"
 
-
-static int	ft_scan_map(t_map *map, int fd)
+static int ft_scan_map(t_map *map, int fd)
 {
-	char	*line;
-	int		empty_line;
+	char *line;
+	int empty_line;
 
 	map->map = (char **)ft_calloc(1, sizeof(char *));
 	if (!map->map)
@@ -26,7 +25,7 @@ static int	ft_scan_map(t_map *map, int fd)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break ;
+			break;
 		if (*line)
 		{
 			if (ft_matrix_len((void **)map->map) && empty_line)
@@ -42,22 +41,19 @@ static int	ft_scan_map(t_map *map, int fd)
 	return (1);
 }
 
-static int	ft_check_map_elem(char c, int *content)
+static int ft_check_map_elem(char c, int *content)
 {
 	if (ft_strchr(" 01NSEW", c) == 0)
 		return (printf("Error\nInvalid map: Invalid component\n"), 0);
-	else if (c == PLAYER_N
-		|| c == PLAYER_E
-		|| c == PLAYER_S
-		|| c == PLAYER_W)
+	else if (c == PLAYER_N || c == PLAYER_E || c == PLAYER_S || c == PLAYER_W)
 		(*content)++;
 	return (1);
 }
 
-static int	ft_check_map(t_map *map)
+static int ft_check_map(t_map *map)
 {
-	int	content;
-	int	i[2];
+	int content;
+	int i[2];
 
 	content = 0;
 	ft_fill_garbage(i, 2);
@@ -79,9 +75,9 @@ static int	ft_check_map(t_map *map)
 	return (1);
 }
 
-int	ft_parse_map(t_map *map, int fd)
+int ft_parse_map(t_map *map, int fd)
 {
-	int	return_value;
+	int return_value;
 
 	return_value = ft_scan_map(map, fd);
 	if (return_value == 0)

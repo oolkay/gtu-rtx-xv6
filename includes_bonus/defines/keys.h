@@ -20,7 +20,7 @@
 // # define D 2
 // # define LEFT 123
 // # define RIGHT 124
-# define F 3
+// # define F 3
 # define Q 12
 # define E 14
 # define ESC 53
@@ -34,6 +34,7 @@
 # define A 97
 # define S 115
 # define D 100
+# define F 102
 # define LEFT 65361
 # define RIGHT 65363
 

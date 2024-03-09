@@ -22,7 +22,7 @@ static void	ft_update_player_direction(t_data *data)
 	angle = data->player.angle;
 
 
-	if (data->player.move.y == S_PRESSED)
+	if (data->player.move.y == 1)
 		angle = ft_update_radian(angle, -PI);
 	else if (data->player.move.x)
 		angle = ft_update_radian(angle, 
