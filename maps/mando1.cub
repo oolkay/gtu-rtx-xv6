@@ -1,18 +1,18 @@
-NO ./textures/wall_north.xpm
-SO ./textures/wall_south.xpm
-WE ./textures/wall_west.xpm
-EA ./textures/wall_east.xpm
+NO ./textures/BRICK_3B.xpm
+SO ./textures/BRICK_3D.xpm
+WE ./textures/BRICK_6D.xpm
+EA ./textures/CRATE_2C.xpm
 
-F 255,255,132
+F 60,120,70
 C 0,0,32
 
-11111111
-1E001001
-10100011
-10000001 111
-10100001 101
-10100001 111
-10100001
-10100001
-10100001
-11111111
+    11111111111111
+        111E001001
+    111111100011111
+    10000000111111
+    1010000111 101
+    10100001 11111
+    10100001
+    10100001
+    10100001
+    11111111

@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 11:31:41 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 14:30:15 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	t_img	*img;
 	int		color;
 
+	img = NULL;
 	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
 	{
 		img = &data->map.north;

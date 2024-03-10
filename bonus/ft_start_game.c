@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:43:06 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:44:53 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 16:57:47 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,26 @@ static int	ft_key_release(int k_code, t_data *data)
 		data->player.rotate = 0;
 	return (0);
 }
+static int	ft_mouse_rotation(int x, int y, t_data *data)
+{
+	double	difference;
+    double	sens;
+
+	(void)y;
+    sens = 0.2;
+	difference = (x) - (WIDTH / 2);
+	data->player.angle = ft_update_radian(data->player.angle,
+			(difference * sens / 180.0));
+	mlx_mouse_move(data->mlx.win, WIDTH / 2, HEIGHT / 2);
+	return (0);
+}
 
 int	ft_start_game(t_data *data)
 {
 	data->mlx.win = (void *)mlx_new_window(data->mlx.display_connector,
 			WIDTH, HEIGHT,
 			"GTU-RTX-XV6 --> ACEPNI & OOLKAY");
+    data->player.angle_rad = ((double)(FOV * PI / 180) / (double)(WIDTH));
 	if (!data->mlx.win)
 	{
 		printf("Error\nCouldn't open window.\n");
@@ -56,9 +70,11 @@ int	ft_start_game(t_data *data)
 	}
 	data->player.move.x = 0;
 	data->player.move.y = 0;
+	mlx_mouse_hide();
 	data->player.rotate = 0;
 	mlx_hook(data->mlx.win, 2, 1L << 0, ft_key_press, data);
 	mlx_hook(data->mlx.win, 3, 1L << 1, ft_key_release, data);
+	mlx_hook(data->mlx.win, ON_MOUSEMOVE, NO_MASK, ft_mouse_rotation, data);
 	mlx_hook(data->mlx.win, ON_EXIT, NO_MASK, ft_free_and_exit, data);
 	mlx_loop_hook(data->mlx.display_connector, ft_update, data);
 	mlx_loop(data->mlx.display_connector);

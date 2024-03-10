@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:46:51 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/10 11:37:34 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 16:39:54 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ typedef struct s_img
 	int		*get_addr;
 }	t_img;
 
-typedef struct s_mini_map
-{
-	double	x;
-	double	y;
-	double	radius;
-	t_img	img;
-}	t_mini_map;
-
-typedef struct s_dimen
-{
-	double	width;
-	double	height;
-}	t_dimen;
-
 typedef struct s_coordinates
 {
 	double	x;
@@ -50,47 +36,18 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-typedef struct s_object
-{
-	double	x;
-	double	y;
-	double	frame;
-}	t_object;
-
-typedef struct s_list
-{
-	void			*data;
-	struct s_list	*next;
-}	t_list;
-
-typedef struct s_i_spr
-{
-	int		frames;
-	t_img	*img;
-}	t_i_spr;
-
 typedef struct s_mlx
 {
-	void	*display_connector;
-	void	*win;
-	t_img	img;
-	t_mini_map	mini_map;
+	void		*display_connector;
+	void		*win;
+	t_img		img;
 }	t_mlx;
-
-typedef struct s_sprite
-{
-	t_coordinates	screen;
-	t_coordinates	collecs;
-	t_coordinates	textures;
-	t_dimen			sprite;
-}	t_sprite;
 
 typedef struct s_render
 {
 	double			degree;
 	double			angle;
 	t_coordinates	wall_hit;
-	t_dimen			wall_dimen;
 	double			distance;
 	int				direction;
 	double			wall_height;
@@ -104,6 +61,7 @@ typedef struct s_player
 	t_coordinates			move;
 	double					angle;
 	double					rotate;
+	double					angle_rad;
 }	t_player;
 
 typedef struct s_map
@@ -115,7 +73,7 @@ typedef struct s_map
 	char			**map;
 	int				ceiling_c;
 	int				floor_c;
-	int 		   show_minimap;
+	int				show_minimap;
 }	t_map;
 
 typedef struct s_data
@@ -123,8 +81,7 @@ typedef struct s_data
 	t_mlx			mlx;
 	t_player		player;
 	t_map			map;
-    t_img           minimap;
+	t_img			minimap;
 }	t_data;
-
 
 #endif

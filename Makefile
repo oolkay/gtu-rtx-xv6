@@ -3,7 +3,7 @@ B_NAME := cub3d_bonus
 
 CC := gcc
 
-CFLAGS := -g -ggdb
+CFLAGS := -g -ggdb -Wall -Wextra -Werror
 
 RM := rm -f
 

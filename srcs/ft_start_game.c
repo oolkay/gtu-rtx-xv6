@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:43:06 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 16:39:39 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_start_game(t_data *data)
 	data->mlx.win = (void *)mlx_new_window(data->mlx.display_connector,
 			WIDTH, HEIGHT,
 			"GTU-RTX-XV6 --> ACEPNI & OOLKAY");
+    data->player.angle_rad = ((double)(FOV * PI / 180) / (double)(WIDTH));
 	if (!data->mlx.win)
 	{
 		printf("Error\nCouldn't open window.\n");

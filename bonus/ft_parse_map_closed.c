@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:16:16 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:19:10 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 14:52:27 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,26 @@ static int	ft_space_surr_check(char **map, int i, int j)
 {
 	if (!map[i][j + 1] || (map[i][j + 1] && map[i][j + 1] == ' '))
 		return (1);
-	else if (j - 1 < 0 || (j - 1 >= 0 && map[i][j - 1] == ' '))
+	if (j - 1 < 0 || (j - 1 >= 0 && map[i][j - 1] == ' '))
 		return (1);
-	else if (!map[i + 1] || (map[i + 1] && j >= (int)ft_strlen(map[i + 1]))
+	if (!map[i + 1] || (map[i + 1] && j >= (int)ft_strlen(map[i + 1]))
 		|| (map[i + 1] && j < (int)ft_strlen(map[i + 1])
 			&& map[i + 1][j] == ' '))
 		return (1);
-	else if (i - 1 < 0 || (i - 1 >= 0 && j >= (int)ft_strlen(map[i - 1]))
+	if (i - 1 < 0 || (i - 1 >= 0 && j >= (int)ft_strlen(map[i - 1]))
 		|| (i - 1 >= 0 && j < (int)ft_strlen(map[i - 1])
 			&& map[i - 1][j] == ' '))
+		return (1);
+	if (i - 1 >= 0 && j - 1 >= 0 && map[i - 1][j - 1] == ' ')
+		return (1);
+	if (i - 1 >= 0 && j + 1 < (int)ft_strlen(map[i])
+		&& map[i - 1][j + 1] == ' ')
+		return (1);
+	if (i + 1 < ft_matrix_len((void **)map) && j - 1 >= 0
+		&& map[i + 1][j - 1] == ' ')
+		return (1);
+	if (i + 1 < ft_matrix_len((void **)map) && j + 1 < (int)ft_strlen(map[i])
+		&& map[i + 1][j + 1] == ' ')
 		return (1);
 	return (0);
 }

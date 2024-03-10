@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:40:53 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/10 13:55:47 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 18:47:48 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,18 @@
 
 # define ON_KEYDOWN 2
 # define ON_KEYUP 3
-# define ON_EXIT 17
 # define ON_MOUSEMOVE 6
+# define ON_EXIT 17
 # define NO_MASK 0
 
-# define COLLECT_FRAME 0.2
-# define DOOR_FRAME 1
 # define FOV 60
 # define OFF_SET 0.5
 # define SPEED 0.025
 
-# define WIDTH 1400
-# define HEIGHT 1400
-
-# define MWIDTH (WIDTH / 40)
-# define MHEIGHT (HEIGHT / 40)
-
-# define ANGLE_RAD ((float)((float)FOV * (float)PI / 180.0f) / (float)(WIDTH))
+# define WIDTH 100
+# define HEIGHT 100
+# define MWIDTH 30
+# define MHEIGHT 30
 # define ROT_SPEED 0.05
 
 # define PI 3.14159265358979323846
@@ -57,7 +52,7 @@
 # define DARK_GREY 0xA9A9A9
 # define LIGHT_BLUE 0xADD8E6
 # define LIGHT_GREEN 0x90EE90
-# define TRANSPARENT 0x00000000
-
+# define TRANSPARENT 0xFF000000
 # define F_C_COLOR_DEF -255
+
 #endif

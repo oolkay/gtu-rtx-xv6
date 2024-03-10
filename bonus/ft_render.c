@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:29:27 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 14:03:18 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 18:24:00 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,12 @@ void	ft_draw_rays(t_data *data, t_render *render)
 		if (beginx > 0 && beginx < WIDTH / 4 - 1 && beginy > 0
 			&& beginy < HEIGHT / 4 - 1)
 			data->minimap.get_addr[(int)beginy * WIDTH / 4
-				+ (int)beginx] = LIGHT_GREEN;
+				+ (int)beginx] = WHITE;
 		beginx += offset.x;
 		beginy += offset.y;
 		j++;
 	}
+    // data->minimap.get_addr[(int)beginy * WIDTH / 4 + (int)beginx] = RED;
 }
 
 void	ft_render(t_data *data)
@@ -133,7 +134,7 @@ void	ft_render(t_data *data)
 		- (((float)((float)FOV * (float)PI / 180.0f)) / 2.0f);
 	while (i < WIDTH)
 	{
-		r.angle = fmod(rang + ((float)i * ANGLE_RAD), 2.0f * PI);
+		r.angle = fmod(rang + ((float)i * data->player.angle_rad), 2.0f * PI);
 		find_hit(data, &r, (t_coordinates){0, 0}, (t_coordinates){0, 0});
 		r.wall_height = (HEIGHT / (1.5f * r.distance));
 		ft_draw_wall(data, &r, i);

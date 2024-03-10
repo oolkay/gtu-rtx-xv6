@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:46:51 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 19:48:08 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/10 16:40:15 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_player
 	t_coordinates			move;
 	double					angle;
 	double					rotate;
+	double					angle_rad;
 }	t_player;
 
 typedef struct s_map

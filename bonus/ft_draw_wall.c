@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 11:31:41 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 13:59:57 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 18:39:57 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	t_img	*img;
 	int		color;
 
+	img = NULL;
 	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
 	{
 		img = &data->map.north;
@@ -45,7 +46,7 @@ static void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 		img = &data->map.south;
 	}
 	else if (render->direction == 'v' && (render->angle >= (PI / 2)
-			&& render->angle <= (3 * PI / 2)))
+			&& render->angle < (3 * PI / 2)))
 		img = &data->map.west;
 	else if (render->direction == 'v')
 		img = &data->map.east;
@@ -91,13 +92,13 @@ void	ft_draw_square(t_data *data, t_point p, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-			if ((p.y + i) < (WIDTH / 4) - 1 && (p.x + j) < (WIDTH / 4) - 1
-				&& ((p.y + i) > 0 && (p.x + j) > 0))
+			if ((p.y + i) <= (WIDTH / 4) - 1 && (p.x + j) <= (WIDTH / 4) - 1
+				&& ((p.y + i) >= 0 && (p.x + j) >= 0))
 			{
-				if (i == 0 || j == 0 || i == size - 1 || j == size - 1)
-					data->minimap.get_addr[(p.y + i) * (WIDTH / 4) + (p.x + j)]
-						= 0xFFFFFF;
-				else
+				// if (i == 0 || j == 0 || i == size - 1 || j == size - 1)
+				// 	data->minimap.get_addr[(p.y + i) * (WIDTH / 4) + (p.x + j)]
+				// 		= LIGHT_BLUE;
+				// else
 					data->minimap.get_addr[(p.y + i) * (WIDTH / 4) + (p.x + j)]
 						= color;
 			}
@@ -115,8 +116,8 @@ void	ft_draw_minimap(t_data *data, int i, int j, t_coordinates pl)
 		j = pl.y - 5;
 		while (j < pl.y + 5)
 		{
-			if (i >= 0 && j >= 0 && j < ft_matrix_len(data->map.map)
-				&& i < ft_strlen(data->map.map[j]))
+			if (i >= 0 && j >= 0 && j < ft_matrix_len((void **)data->map.map)
+				&& i < (int)ft_strlen(data->map.map[j]))
 			{
 				if (data->map.map[j][i]
 					&& ft_strchr("0NSWE", data->map.map[j][i]))
@@ -124,11 +125,11 @@ void	ft_draw_minimap(t_data *data, int i, int j, t_coordinates pl)
 						(j - pl.y + 5) * MWIDTH}, MWIDTH, DARK_GREY);
 				else
 					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
-						(j - pl.y + 5) * MWIDTH}, MWIDTH, BLACK);
+						(j - pl.y + 5) * MWIDTH}, MWIDTH, LIGHT_GREEN);
 			}
 			else
 				ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
-					(j - pl.y + 5) * MWIDTH}, MWIDTH, WHITE);
+					(j - pl.y + 5) * MWIDTH}, MWIDTH, TRANSPARENT);
 			j++;
 		}
 		i++;

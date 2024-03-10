@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:48:24 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:48:42 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 18:46:23 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int	main(int argc, char **argv)
 
 	if (ft_arg_number_check(argc) == 0)
 		return (EXIT_FAILURE);
+    if (HEIGHT < 200 || WIDTH < 200)
+        return (printf("Error\nInvalid resolution. The game is not playable\n"),
+            EXIT_FAILURE);
 	ft_init_mlx(&data);
 	return_val = ft_import_map(&data, argv[1]);
 	if (return_val != 1)
@@ -54,7 +57,7 @@ int	main(int argc, char **argv)
 	return_val = ft_init_images(&data);
 	if (return_val != 1)
 		ft_free_and_exit(&data, EXIT_FAILURE);
-	return_val = ft_start_game(&data);
+	return_val = ft_start_game(&data); 
 	if (return_val != 1)
 		ft_free_and_exit(&data, EXIT_FAILURE);
 	return (EXIT_SUCCESS);

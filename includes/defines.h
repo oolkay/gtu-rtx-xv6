@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:40:53 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 19:44:38 by oolkay           ###   ########.fr       */
+/*   Updated: 2024/03/10 17:42:52 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define OFF_SET 0.5
 # define SPEED 0.025
 
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1000
+# define HEIGHT 1000
 
 # define PI 3.14159265358979323846
 

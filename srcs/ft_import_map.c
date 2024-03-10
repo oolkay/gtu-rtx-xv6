@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:08:37 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 14:38:00 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_init_map(t_map *map)
 static void	ft_get_player_ang(t_data *data, double x, double y)
 {
 	if (data->map.map[(int)y][(int)x] == 'N')
-		data->player.angle = -PI / 2;
+		data->player.angle = 3 * PI / 2;
 	else if (data->map.map[(int)y][(int)x] == 'S')
 		data->player.angle = PI / 2;
 	else if (data->map.map[(int)y][(int)x] == 'W')
