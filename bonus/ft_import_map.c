@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_import_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 14:12:12 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 21:45:34 by oolkay           ###   ########.fr       */
+/*   Created: 2024/03/10 12:08:37 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 12:09:41 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d.h"
 
-static void ft_init_map(t_map *map)
+static void	ft_init_map(t_map *map)
 {
 	map->north.img = NULL;
 	map->south.img = NULL;
@@ -23,7 +23,7 @@ static void ft_init_map(t_map *map)
 	map->map = NULL;
 }
 
-static void ft_get_player_ang(t_data *data, double x, double y)
+static void	ft_get_player_ang(t_data *data, double x, double y)
 {
 	if (data->map.map[(int)y][(int)x] == 'N')
 		data->player.angle = -PI / 2;
@@ -35,9 +35,9 @@ static void ft_get_player_ang(t_data *data, double x, double y)
 		data->player.angle = 0;
 }
 
-static void ft_init_player_starting_pos(t_data *data)
+static void	ft_init_player_starting_pos(t_data *data)
 {
-	int i[2];
+	int	i[2];
 
 	ft_fill_garbage(i, 2);
 	while (data->map.map[i[0]])
@@ -50,7 +50,7 @@ static void ft_init_player_starting_pos(t_data *data)
 				data->player.pos.x = (double)i[1] + OFF_SET;
 				data->player.pos.y = (double)i[0] + OFF_SET;
 				ft_get_player_ang(data, data->player.pos.x, data->player.pos.y);
-				return;
+				return ;
 			}
 			i[1]++;
 		}
@@ -58,14 +58,15 @@ static void ft_init_player_starting_pos(t_data *data)
 	}
 }
 
-int ft_import_map(t_data *data, char *argv)
+int	ft_import_map(t_data *data, char *argv)
 {
-	int fd;
-	int return_value;
+	int	fd;
+	int	return_value;
 
 	ft_init_map(&data->map);
 	if (ft_extention_check(argv) == 0)
-		return (printf("Error\nInvalid file extension.\n./cub3d <file.cub>\n"), 0);
+		return (printf("Error\nInvalid file extension.\n./cub3d <file.cub>\n"),
+			0);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nCouldn't open <%s> file.\n", argv), 0);

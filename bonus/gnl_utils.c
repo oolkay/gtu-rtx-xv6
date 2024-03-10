@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 17:33:59 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:52:26 by acepni           ###   ########.fr       */
+/*   Created: 2024/03/10 12:46:44 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 12:47:37 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d.h"
 
-char *ft_strsjoin(char *d_line, char *buff)
+char	*ft_strsjoin(char *d_line, char *buff)
 {
-	size_t i;
-	size_t j;
-	char *str;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
 	if (!d_line)
 	{
@@ -40,10 +40,10 @@ char *ft_strsjoin(char *d_line, char *buff)
 	return (str);
 }
 
-char *ft_get_line(char *d_line)
+char	*ft_get_line(char *d_line)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (!d_line[i])
@@ -63,11 +63,11 @@ char *ft_get_line(char *d_line)
 	return (str);
 }
 
-char *ft_new_dinamic_line(char *d_line)
+char	*ft_new_dinamic_line(char *d_line)
 {
-	int i;
-	int j;
-	char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	while (d_line[i] && d_line[i] != '\n')

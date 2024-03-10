@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:40:53 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:48:32 by acepni           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:01:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 
 # define WIDTH 800
 # define HEIGHT 800
+
+# define MWIDTH (WIDTH / 40)
+# define MHEIGHT (HEIGHT / 40)
 
 # define ANGLE_RAD ((float)((float)FOV * (float)PI / 180.0f) / (float)(WIDTH))
 # define ROT_SPEED 0.05

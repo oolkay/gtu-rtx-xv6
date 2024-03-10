@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_game.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 18:16:47 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:26:08 by acepni           ###   ########.fr       */
+/*   Created: 2024/03/10 12:43:06 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 12:44:53 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d.h"
 
-static int ft_key_press(int k_code, t_data *data)
+static int	ft_key_press(int k_code, t_data *data)
 {
 	if (k_code == W)
 		data->player.move.y = -1;
@@ -29,11 +29,11 @@ static int ft_key_press(int k_code, t_data *data)
 	else if (k_code == ESC)
 		ft_free_and_exit(data, EXIT_SUCCESS);
 	else if (k_code == F)
-	    data->map.show_minimap = !data->map.show_minimap;
+		data->map.show_minimap = !data->map.show_minimap;
 	return (0);
 }
 
-static int ft_key_release(int k_code, t_data *data)
+static int	ft_key_release(int k_code, t_data *data)
 {
 	if (k_code == W || k_code == S)
 		data->player.move.y = 0;
@@ -44,10 +44,11 @@ static int ft_key_release(int k_code, t_data *data)
 	return (0);
 }
 
-int ft_start_game(t_data *data)
+int	ft_start_game(t_data *data)
 {
 	data->mlx.win = (void *)mlx_new_window(data->mlx.display_connector,
-										   WIDTH, HEIGHT, "GTU-RTX-XV6 --> ACEPNI & OOLKAY");
+			WIDTH, HEIGHT,
+			"GTU-RTX-XV6 --> ACEPNI & OOLKAY");
 	if (!data->mlx.win)
 	{
 		printf("Error\nCouldn't open window.\n");

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 13:48:42 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 17:11:09 by acepni           ###   ########.fr       */
+/*   Created: 2024/03/10 12:48:24 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 12:48:42 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d.h"
 
-static int ft_arg_number_check(int argc)
+static int	ft_arg_number_check(int argc)
 {
 	if (argc < 2)
 	{
@@ -27,7 +27,7 @@ static int ft_arg_number_check(int argc)
 	return (1);
 }
 
-static void ft_init_mlx(t_data *data)
+static void	ft_init_mlx(t_data *data)
 {
 	data->mlx.win = NULL;
 	data->mlx.img.img = NULL;
@@ -40,10 +40,10 @@ static void ft_init_mlx(t_data *data)
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
-	int return_val;
+	t_data	data;
+	int		return_val;
 
 	if (ft_arg_number_check(argc) == 0)
 		return (EXIT_FAILURE);

@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 18:09:03 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:26:04 by acepni           ###   ########.fr       */
+/*   Created: 2024/03/10 11:29:52 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 11:29:53 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes_bonus/cub3d.h"
 
-int ft_extention_check(char *str)
+int	ft_extention_check(char *str)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(str);
 	if (len < 4)
@@ -24,9 +25,9 @@ int ft_extention_check(char *str)
 	return (1);
 }
 
-int ft_is_number(char *str)
+int	ft_is_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

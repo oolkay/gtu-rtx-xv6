@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acepni <acepni@student.42.tr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 20:26:23 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 15:24:05 by acepni           ###   ########.fr       */
+/*   Created: 2024/03/10 12:19:21 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 12:20:22 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d.h"
 
-static int ft_scan_map(t_map *map, int fd)
+static int	ft_scan_map(t_map *map, int fd)
 {
-	char *line;
-	int empty_line;
+	char	*line;
+	int		empty_line;
 
 	map->map = (char **)ft_calloc(1, sizeof(char *));
 	if (!map->map)
@@ -25,7 +25,7 @@ static int ft_scan_map(t_map *map, int fd)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (*line)
 		{
 			if (ft_matrix_len((void **)map->map) && empty_line)
@@ -41,7 +41,7 @@ static int ft_scan_map(t_map *map, int fd)
 	return (1);
 }
 
-static int ft_check_map_elem(char c, int *content)
+static int	ft_check_map_elem(char c, int *content)
 {
 	if (ft_strchr(" 01NSEW", c) == 0)
 		return (printf("Error\nInvalid map: Invalid component\n"), 0);
@@ -50,10 +50,10 @@ static int ft_check_map_elem(char c, int *content)
 	return (1);
 }
 
-static int ft_check_map(t_map *map)
+static int	ft_check_map(t_map *map)
 {
-	int content;
-	int i[2];
+	int	content;
+	int	i[2];
 
 	content = 0;
 	ft_fill_garbage(i, 2);
@@ -75,9 +75,9 @@ static int ft_check_map(t_map *map)
 	return (1);
 }
 
-int ft_parse_map(t_map *map, int fd)
+int	ft_parse_map(t_map *map, int fd)
 {
-	int return_value;
+	int	return_value;
 
 	return_value = ft_scan_map(map, fd);
 	if (return_value == 0)
