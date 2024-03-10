@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:08:37 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:09:41 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 13:58:18 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	ft_init_player_starting_pos(t_data *data)
 		{
 			if (ft_strchr("NSEW", data->map.map[i[0]][i[1]]))
 			{
-				data->player.pos.x = (double)i[1] + OFF_SET;
-				data->player.pos.y = (double)i[0] + OFF_SET;
+				data->player.pos.x = (double)i[1];
+				data->player.pos.y = (double)i[0];
 				ft_get_player_ang(data, data->player.pos.x, data->player.pos.y);
 				return ;
 			}

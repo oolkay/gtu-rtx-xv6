@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_assign_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/12 13:09:43 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:07:19 by cbolat           ###   ########.fr       */
+/*   Created: 2024/03/10 11:29:59 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	ft_assign_color(int *color, char **sp)
 	rgb_val[1] = ft_atoi(rgb[1]);
 	rgb_val[2] = ft_atoi(rgb[2]);
 	ft_free_matrix((void **)rgb);
-	if (rgb_val[0] < 0 || rgb_val[0] > 255 || rgb_val[1] < 0 || rgb_val[1] > 255
-		|| rgb_val[2] < 0 || rgb_val[2] > 255)
+	if (rgb_val[0] < 0 || rgb_val[0] > 255 || rgb_val[1] < 0
+		|| rgb_val[1] > 255 || rgb_val[2] < 0 || rgb_val[2] > 255)
 		return (printf("Error\nInvalid color values [%s].\n", sp[1]), 0);
 	*color = ft_create_color(0, rgb_val[0], rgb_val[1], rgb_val[2]);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/30 18:55:57 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:07:05 by cbolat           ###   ########.fr       */
+/*   Created: 2024/03/10 12:03:07 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ static int	ft_format_check(char **sp)
 	int	len;
 
 	len = ft_matrix_len((void **)sp);
-	if ((ft_strcmp(sp[0], "NO") == 0 && len != 2)
-		|| (ft_strcmp(sp[0], "SO") == 0 && len != 2)
-		|| (ft_strcmp(sp[0], "WE") == 0 && len != 2)
-		|| (ft_strcmp(sp[0], "EA") == 0 && len != 2)
-		|| (ft_strcmp(sp[0], "F") == 0 && len != 2)
-		|| (ft_strcmp(sp[0], "C") == 0 && len != 2))
+	if ((ft_strcmp(sp[0], "NO") == 0 && len != 2) || (ft_strcmp(sp[0], "SO")
+			== 0 && len != 2) || (ft_strcmp(sp[0], "WE") == 0 && len != 2)
+		|| (ft_strcmp(sp[0], "EA") == 0 && len != 2) || (ft_strcmp(sp[0], "F")
+			== 0 && len != 2) || (ft_strcmp(sp[0], "C") == 0 && len != 2))
 		return (printf("Error\nInvalid texture format [%s].\n", sp[0]), 0);
 	return (1);
 }
@@ -42,7 +40,8 @@ static int	ft_dup_check(t_data *data, char **sp)
 		|| (ft_strcmp(sp[0], "WE") == 0 && data->map.west.img)
 		|| (ft_strcmp(sp[0], "EA") == 0 && data->map.east.img)
 		|| (ft_strcmp(sp[0], "F") == 0 && data->map.floor_c != F_C_COLOR_DEF)
-		|| (ft_strcmp(sp[0], "C") == 0 && data->map.ceiling_c != F_C_COLOR_DEF))
+		|| (ft_strcmp(sp[0], "C") == 0 && data->map.ceiling_c
+			!= F_C_COLOR_DEF))
 		return (printf("Error\nDuplicated texture [%s].\n", sp[0]), 0);
 	return (1);
 }
@@ -78,7 +77,8 @@ int	ft_fill_textures(t_data *data, int fd)
 		{
 			line_sp = ft_split(line, ' ');
 			if (!line_sp)
-				return (printf("Error\nMalloc failed\nMap cannot splitted!"), 0);
+				return (printf("Error\nMalloc failed\nMap cannot splitted!"),
+					0);
 			return_value = ft_parse_textures(data, line_sp);
 			if (!return_value)
 				return (ft_free_matrix((void **)line_sp), free(line), 0);

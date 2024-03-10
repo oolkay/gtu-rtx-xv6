@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:45:02 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:46:33 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 13:58:11 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_update(t_data *data)
 	if (data->map.show_minimap)
 		mlx_put_image_to_window(data->mlx.display_connector,
 			data->mlx.win, data->minimap.img,
-			WIDTH - 250, HEIGHT - 250);
+			WIDTH - (WIDTH/3), HEIGHT - (HEIGHT/3));
 	ft_draw_banner(data);
 	return (0);
 }

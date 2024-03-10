@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_game.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 18:16:47 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 21:36:22 by cbolat           ###   ########.fr       */
+/*   Created: 2024/03/10 12:43:06 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	ft_key_release(int k_code, t_data *data)
 int	ft_start_game(t_data *data)
 {
 	data->mlx.win = (void *)mlx_new_window(data->mlx.display_connector,
-			WIDTH, HEIGHT, "cub3d-made by cbolat and alcelik");
-	mlx_string_put(data->mlx.display_connector, data->mlx.win, 10, 10, 0xFF0000, "WASD to move");
+			WIDTH, HEIGHT,
+			"GTU-RTX-XV6 --> ACEPNI & OOLKAY");
 	if (!data->mlx.win)
 	{
 		printf("Error\nCouldn't open window.\n");
@@ -55,9 +55,8 @@ int	ft_start_game(t_data *data)
 	data->player.move.x = 0;
 	data->player.move.y = 0;
 	data->player.rotate = 0;
-	// mlx_mouse_hide(data->mlx.display_connector, data->mlx.win);
-	mlx_hook(data->mlx.win,  2, 1L<<0, ft_key_press, data);
-	mlx_hook(data->mlx.win, 3, 1L<<1, ft_key_release, data);
+	mlx_hook(data->mlx.win, 2, 1L << 0, ft_key_press, data);
+	mlx_hook(data->mlx.win, 3, 1L << 1, ft_key_release, data);
 	mlx_hook(data->mlx.win, ON_EXIT, NO_MASK, ft_free_and_exit, data);
 	mlx_loop_hook(data->mlx.display_connector, ft_update, data);
 	mlx_loop(data->mlx.display_connector);

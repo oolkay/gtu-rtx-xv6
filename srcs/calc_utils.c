@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 01:01:27 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/07 18:45:34 by oolkay           ###   ########.fr       */
+/*   Created: 2024/03/10 11:29:48 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:16:53 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,13 @@ double	ft_update_radian(double radian, double inc)
 double	ft_deg_to_rad(double degree)
 {
 	return ((degree * PI) / 180.0);
+}
+
+int	is_map(const t_data *data, float x, float y)
+{
+	if (y < 0 || y > ft_matrix_len((void **)data->map.map))
+		return (0);
+	if (x < 0 || x > ft_strlen(data->map.map[(int)y]))
+		return (0);
+	return (1);
 }

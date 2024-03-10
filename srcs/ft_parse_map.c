@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbolat <cbolat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 20:26:23 by cbolat            #+#    #+#             */
-/*   Updated: 2023/08/20 15:08:52 by cbolat           ###   ########.fr       */
+/*   Created: 2024/03/10 12:19:21 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ static int	ft_check_map_elem(char c, int *content)
 {
 	if (ft_strchr(" 01NSEW", c) == 0)
 		return (printf("Error\nInvalid map: Invalid component\n"), 0);
-	else if (c == PLAYER_N
-		|| c == PLAYER_E
-		|| c == PLAYER_S
-		|| c == PLAYER_W)
+	else if (c == PLAYER_N || c == PLAYER_E || c == PLAYER_S || c == PLAYER_W)
 		(*content)++;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_import_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 14:12:12 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 21:48:45 by oolkay           ###   ########.fr       */
+/*   Created: 2024/03/10 12:08:37 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	ft_init_map(t_map *map)
 static void	ft_get_player_ang(t_data *data, double x, double y)
 {
 	if (data->map.map[(int)y][(int)x] == 'N')
-		data->player.angle = -PI/2;
+		data->player.angle = -PI / 2;
 	else if (data->map.map[(int)y][(int)x] == 'S')
-		data->player.angle = PI/2;
+		data->player.angle = PI / 2;
 	else if (data->map.map[(int)y][(int)x] == 'W')
 		data->player.angle = PI;
 	else if (data->map.map[(int)y][(int)x] == 'E')
@@ -65,7 +65,8 @@ int	ft_import_map(t_data *data, char *argv)
 
 	ft_init_map(&data->map);
 	if (ft_extention_check(argv) == 0)
-		return (printf("Error\nInvalid file extension.\n./cub3d <file.cub>\n"), 0);
+		return (printf("Error\nInvalid file extension.\n./cub3d <file.cub>\n"),
+			0);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nCouldn't open <%s> file.\n", argv), 0);

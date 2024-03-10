@@ -22,7 +22,6 @@ SRCS := ./srcs/calc_utils.c \
 		./srcs/ft_render.c \
 		./srcs/ft_start_game.c \
 		./srcs/ft_update.c \
-		./srcs/ft_wall_dimension.c \
 		./srcs/gnl_utils.c \
 		./srcs/gnl.c \
 		./srcs/main.c \
@@ -43,7 +42,6 @@ OBJS := ./objs/calc_utils.o \
 		./objs/ft_render.o \
 		./objs/ft_start_game.o \
 		./objs/ft_update.o \
-		./objs/ft_wall_dimension.o \
 		./objs/gnl_utils.o \
 		./objs/gnl.o \
 		./objs/main.o \

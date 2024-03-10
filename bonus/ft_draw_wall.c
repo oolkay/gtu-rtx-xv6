@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 11:31:41 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:00:58 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 13:59:57 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,17 @@ void	ft_draw_minimap(t_data *data, int i, int j, t_coordinates pl)
 				if (data->map.map[j][i]
 					&& ft_strchr("0NSWE", data->map.map[j][i]))
 					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
-						(j - pl.y + 5) * MWIDTH}, MWIDTH, 0xFFFFFF);
+						(j - pl.y + 5) * MWIDTH}, MWIDTH, DARK_GREY);
 				else
 					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
-						(j - pl.y + 5) * MWIDTH}, MWIDTH, 0xFF0000);
+						(j - pl.y + 5) * MWIDTH}, MWIDTH, BLACK);
 			}
 			else
 				ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
-					(j - pl.y + 5) * MWIDTH}, MWIDTH, 0xFFFFFF);
+					(j - pl.y + 5) * MWIDTH}, MWIDTH, WHITE);
 			j++;
 		}
 		i++;
 	}
-	ft_draw_square(data, (t_point){WIDTH / 8 - 4, WIDTH / 8 - 4}, 8, 0xFF0000);
+	ft_draw_square(data, (t_point){WIDTH / 8 - 4, WIDTH / 8 - 4}, 8, RED);
 }

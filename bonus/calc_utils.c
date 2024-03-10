@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 11:29:48 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:41:22 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 13:16:04 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ double	ft_deg_to_rad(double degree)
 	return ((degree * PI) / 180.0);
 }
 
-static int	is_map(const t_data *data, float x, float y)
+int	is_map(const t_data *data, float x, float y)
 {
 	if (y < 0 || y > ft_matrix_len((void **)data->map.map))
 		return (0);

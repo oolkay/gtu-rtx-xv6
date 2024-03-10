@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_draw_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oolkay <oolkay@42.tr>                      +#+  +:+       +#+        */
+/*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/12 14:40:44 by cbolat            #+#    #+#             */
-/*   Updated: 2024/03/09 21:19:11 by oolkay           ###   ########.fr       */
+/*   Created: 2024/03/10 11:31:41 by omer/baha         #+#    #+#             */
+/*   Updated: 2024/03/10 13:15:20 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int ft_get_pixel_texture(t_img image, t_render *render)
+static int	ft_get_pixel_texture(t_img image, t_render *render)
 {
-	int tx;
-	int ty;
-	double ty_step;
-	double ty_off;
+	int		tx;
+	int		ty;
+	double	ty_step;
+	double	ty_off;
 
 	if (render->direction == 'h')
 		tx = image.width * (render->wall_hit.x - (int)(render->wall_hit.x));
@@ -31,34 +31,36 @@ static int ft_get_pixel_texture(t_img image, t_render *render)
 	return (image.get_addr[(abs(ty) * image.width) + abs(tx)]);
 }
 
-static void ft_draw_pixel(t_data *data, int x, int y, t_render *render)
+static void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 {
-	t_img *img;
-	int color;
+	t_img	*img;
+	int		color;
 
 	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
-		{
-			img = &data->map.north;}
+	{
+		img = &data->map.north;
+	}
 	else if (render->direction == 'h')
-		{
-			img = &data->map.south;}
-	else if (render->direction == 'v' && (render->angle >= (PI / 2) || render->angle <= (3 * PI / 2))) 
+	{
+		img = &data->map.south;
+	}
+	else if (render->direction == 'v' && (render->angle >= (PI / 2)
+			&& render->angle <= (3 * PI / 2)))
 		img = &data->map.west;
 	else if (render->direction == 'v')
 		img = &data->map.east;
 	color = ft_get_pixel_texture(*img, render);
-	// if (color != ft_create_color(255, 0, 0, 0))
 	data->mlx.img.get_addr[y * WIDTH + x] = color;
 }
 
-void ft_draw_wall(t_data *data, t_render *render, int x)
+void	ft_draw_wall(t_data *data, t_render *render, int x)
 {
-	int y;
-	int y_off;
-	int y_end;
+	int	y;
+	int	y_off;
+	int	y_end;
 
 	y_off = (HEIGHT / 2) - (render->wall_height / 2);
-	y_end = (HEIGHT / 2) + (render->wall_height / 2);
+	y_end = (HEIGHT / 2) + (render->wall_height / 2) - 1;
 	y = 0;
 	while (y < y_off)
 	{
@@ -67,7 +69,6 @@ void ft_draw_wall(t_data *data, t_render *render, int x)
 	}
 	while (y < y_end && y < HEIGHT)
 	{
-		// data->mlx.img.get_addr[y * WIDTH + x] = 0xFFAABB;
 		ft_draw_pixel(data, x, y, render);
 		(render->y_tex)++;
 		y++;
@@ -78,44 +79,3 @@ void ft_draw_wall(t_data *data, t_render *render, int x)
 		y++;
 	}
 }
-
-// void	ft_draw_wall(t_data *data, t_list *ll_render)
-// {
-// 	int			x;
-// 	int			y;
-// 	t_render	*render;
-
-// 	while (ll_render)
-// 	{
-// 		render = ll_render->data;
-// 		render->y_tex = 0;
-// 		y = (HEIGHT / 2) - (render->wall_dimen.height / 2);
-// 		for (int i = 0; i < y; i++)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			data->mlx.img.get_addr[i * WIDTH + x] = data->map.ceiling_c;
-// 			data->mlx.img.get_addr[i * WIDTH + x + 1] = data->map.ceiling_c;
-// 		}
-
-// 		while (y < (HEIGHT / 2) + (render->wall_dimen.height / 2) && y < HEIGHT)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			while (x < ((render->degree / ROT_SPEED) * render->wall_dimen.width)
-// 				+ render->wall_dimen.width && x < WIDTH){
-// 				// if (!data->mlx.img.get_addr[y * WIDTH + x])
-// 					ft_draw_pixel(data, x, y, render);
-// 				x++;
-// 			}
-// 			(render->y_tex)++;
-// 			y++;
-// 		}
-// 		for (int i = y; i < HEIGHT; i++)
-// 		{
-// 			x = (render->degree / ROT_SPEED) * render->wall_dimen.width;
-// 			data->mlx.img.get_addr[i * WIDTH + x] = data->map.floor_c;
-// 			data->mlx.img.get_addr[i * WIDTH + x + 1] = data->map.floor_c;
-
-// 		}
-// 		ll_render = ll_render->next;
-// 	}
-// }

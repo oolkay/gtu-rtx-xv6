@@ -6,7 +6,7 @@
 /*   By: omer/baha <oolkay/acepni@gtu.xv6>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:12:47 by omer/baha         #+#    #+#             */
-/*   Updated: 2024/03/10 12:16:08 by omer/baha        ###   ########.fr       */
+/*   Updated: 2024/03/10 13:35:48 by omer/baha        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_update_player_direction(t_data *data)
 				data->player.move.x * PI / 2);
 	if (data->player.move.y && data->player.move.x)
 		angle = ft_update_radian(angle,
-				data->player.move.x * PI / 4);
+				-data->player.move.x * PI / 4);
 	data->player.dir.x = cos(angle);
 	data->player.dir.y = sin(angle);
 }
