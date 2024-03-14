@@ -45,6 +45,22 @@ int	ft_init_images(t_data *data)
 			&data->minimap.bits_per_pixel, &data->minimap.line_length,
 			&data->minimap.steps);
 	data->map.show_minimap = 1;
+	data->door.img = mlx_xpm_file_to_image(data->mlx.display_connector,
+			"./textures/door.xpm", &data->door.width, &data->door.height);
+	if (!data->door.img)
+		return (printf("Error\nInvalid texture path"), 0);
+	data->door.get_addr = (int *)mlx_get_data_addr(data->door.img, &data->door.bits_per_pixel,
+			&data->door.line_length, &data->door.steps);
+	if (!data->door.get_addr)
+		return (printf("Error\nCouldn't initilize door texture.\n"), 0);
+	data->door_open.img = mlx_xpm_file_to_image(data->mlx.display_connector,
+			"./textures/door.xpm", &data->door_open.width, &data->door_open.height);
+	if (!data->door_open.img)
+		return (printf("Error\nInvalid texture path"), 0);
+	data->door_open.get_addr = (int *)mlx_get_data_addr(data->door_open.img, &data->door_open.bits_per_pixel,
+			&data->door_open.line_length, &data->door_open.steps);
+	if (!data->door_open.get_addr)
+		return (printf("Error\nCouldn't initilize door texture.\n"), 0);
 	clear_mini_map(&data->minimap);
 	return (1);
 }

@@ -3,7 +3,8 @@ B_NAME := cub3d_bonus
 
 CC := gcc
 
-CFLAGS := -g -ggdb -Wall -Wextra -Werror
+CFLAGS := 
+SOMEFLAG = -lft -lmlx -lm -lX11 -lXext
 
 RM := rm -f
 
@@ -87,7 +88,6 @@ BONUS_OBJS := ./bonus_obj/calc_utils.o \
 		./bonus_obj/main.o \
 		./bonus_obj/matrix.o
 
-
 LIBFT_DIR := libft
 MINILIBX_DIR := minilibx
 
@@ -96,20 +96,18 @@ bonus : $(B_NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS)
 	@make -C $(LIBFT_DIR)
-	@make -C $(MINILIBX_DIR)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+	@$(CC)   $(CFLAGS) -I$(LIBFT_DIR) -L$(LIBFT_DIR)  $(OBJS) $(SOMEFLAG) -o $(NAME)
 	@rm -rf $(B_NAME)
 	@echo "Compiled cub3d"
 
 $(B_NAME): $(BONUS_OBJS_DIR) $(BONUS_OBJS)
 	@make -C $(LIBFT_DIR)
-	@make -C $(MINILIBX_DIR)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit $(BONUS_OBJS) -o $(B_NAME)
+	@$(CC)  $(CFLAGS) -I$(LIBFT_DIR) -L$(LIBFT_DIR)  $(BONUS_OBJS) $(SOMEFLAG) -o $(B_NAME)
 	@rm -rf $(NAME)
 	@echo "Compiled cub3d_bonus"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) ${SOMEFLAG} -c $< -o $@
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)

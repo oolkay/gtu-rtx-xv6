@@ -30,6 +30,8 @@ static int	ft_key_press(int k_code, t_data *data)
 		ft_free_and_exit(data, EXIT_SUCCESS);
 	else if (k_code == F)
 		data->map.show_minimap = !data->map.show_minimap;
+	else if (k_code == E)
+		data->player.door_signal = 1;
 	return (0);
 }
 
@@ -70,11 +72,12 @@ int	ft_start_game(t_data *data)
 	}
 	data->player.move.x = 0;
 	data->player.move.y = 0;
-	mlx_mouse_hide();
+	// mlx_mouse_hide();
 	data->player.rotate = 0;
+	data->player.door_signal = 0;
 	mlx_hook(data->mlx.win, 2, 1L << 0, ft_key_press, data);
 	mlx_hook(data->mlx.win, 3, 1L << 1, ft_key_release, data);
-	mlx_hook(data->mlx.win, ON_MOUSEMOVE, NO_MASK, ft_mouse_rotation, data);
+	// mlx_hook(data->mlx.win, ON_MOUSEMOVE, NO_MASK, ft_mouse_rotation, data);
 	mlx_hook(data->mlx.win, ON_EXIT, NO_MASK, ft_free_and_exit, data);
 	mlx_loop_hook(data->mlx.display_connector, ft_update, data);
 	mlx_loop(data->mlx.display_connector);

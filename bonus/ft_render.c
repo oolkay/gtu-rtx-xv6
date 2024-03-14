@@ -12,7 +12,7 @@
 
 #include "../includes_bonus/cub3d.h"
 
-static void	h_raycast(const t_data *data, t_coordinates *endPoint, t_render *r)
+static void	h_raycast(const t_data *data, t_coordinates *endPoint, t_render *r, char *obs)
 {
 	t_coordinates	step;
 	float			scale;
@@ -32,14 +32,14 @@ static void	h_raycast(const t_data *data, t_coordinates *endPoint, t_render *r)
 	else
 		endPoint->x = data->player.pos.x + 0.5 - scale;
 	while (is_map(data, endPoint->x, endPoint->y)
-		&& data->map.map[(int)endPoint->y][(int)endPoint->x] != WALL)
+		&& !strchr(obs, data->map.map[(int)endPoint->y][(int)endPoint->x]))
 	{
 		endPoint->x += step.x;
 		endPoint->y += step.y;
 	}
 }
 
-static void	v_raycast(const t_data *data, t_coordinates *endPoint, t_render *r)
+static void	v_raycast(const t_data *data, t_coordinates *endPoint, t_render *r, char *obs)
 {
 	t_coordinates	step;
 	float			scale;
@@ -59,7 +59,7 @@ static void	v_raycast(const t_data *data, t_coordinates *endPoint, t_render *r)
 	else
 		endPoint->y = data->player.pos.y + 0.5 - scale;
 	while (is_map(data, endPoint->x, endPoint->y)
-		&& data->map.map[(int)endPoint->y][(int)endPoint->x] != WALL)
+		&& !strchr(obs, data->map.map[(int)endPoint->y][(int)endPoint->x]))
 	{
 		endPoint->x += step.x;
 		endPoint->y += step.y;
@@ -67,12 +67,12 @@ static void	v_raycast(const t_data *data, t_coordinates *endPoint, t_render *r)
 }
 
 static void	find_hit(t_data *data, t_render *r,
-	t_coordinates vEnd, t_coordinates hEnd)
+	t_coordinates vEnd, t_coordinates hEnd, char *obs)
 {
 	t_coordinates	ray_len;
 
-	v_raycast(data, &vEnd, r);
-	h_raycast(data, &hEnd, r);
+	v_raycast(data, &vEnd, r, obs);
+	h_raycast(data, &hEnd, r, obs);
 	ray_len.x = sqrt(pow((data->player.pos.x + 0.5) - vEnd.x, 2)
 			+ pow((data->player.pos.y + 0.5) - vEnd.y, 2));
 	ray_len.y = sqrt(pow((data->player.pos.x + 0.5) - hEnd.x, 2)
@@ -135,10 +135,16 @@ void	ft_render(t_data *data)
 	while (i < WIDTH)
 	{
 		r.angle = fmod(rang + ((float)i * data->player.angle_rad), 2.0f * PI);
-		find_hit(data, &r, (t_coordinates){0, 0}, (t_coordinates){0, 0});
+		find_hit(data, &r, (t_coordinates){0, 0}, (t_coordinates){0, 0}, WALLS);
 		r.wall_height = (HEIGHT / (1.5f * r.distance));
 		ft_draw_wall(data, &r, i);
 		ft_draw_rays(data, &r);
 		i++;
+	}
+	if(data->player.door_signal)
+	{
+		r.angle = data->player.angle;
+		find_hit(data, &r, (t_coordinates){0, 0}, (t_coordinates){0, 0}, "123");
+		ft_open_door(data, &r);
 	}
 }

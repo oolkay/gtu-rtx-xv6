@@ -43,7 +43,7 @@ static int	ft_scan_map(t_map *map, int fd)
 
 static int	ft_check_map_elem(char c, int *content)
 {
-	if (ft_strchr(" 01NSEW", c) == 0)
+	if (ft_strchr(" 0123NSEW", c) == 0)
 		return (printf("Error\nInvalid map: Invalid component\n"), 0);
 	else if (c == PLAYER_N || c == PLAYER_E || c == PLAYER_S || c == PLAYER_W)
 		(*content)++;

@@ -27,10 +27,10 @@
 # define OFF_SET 0.5
 # define SPEED 0.025
 
-# define WIDTH 100
-# define HEIGHT 100
-# define MWIDTH 30
-# define MHEIGHT 30
+# define WIDTH 800
+# define HEIGHT 800
+# define MWIDTH 20
+# define MHEIGHT 20
 # define ROT_SPEED 0.05
 
 # define PI 3.14159265358979323846

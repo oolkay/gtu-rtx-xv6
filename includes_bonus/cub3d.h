@@ -41,5 +41,6 @@ void	ft_draw_minimap(t_data *data, int x, int y, t_coordinates pos);
 void	ft_draw_rays(t_data *data, t_render *r);
 void	ft_draw_banner(t_data *data);
 int		is_map(const t_data *data, float x, float y);
+void    ft_open_door(t_data *data, t_render *r);
 
 #endif

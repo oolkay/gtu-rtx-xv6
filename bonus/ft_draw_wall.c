@@ -37,14 +37,13 @@ static void	ft_draw_pixel(t_data *data, int x, int y, t_render *render)
 	int		color;
 
 	img = NULL;
-	if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
-	{
+
+	if(data->map.map[(int)render->wall_hit.y][(int)render->wall_hit.x] == '2')
+		img = &data->door;
+	else if (render->direction == 'h' && (render->angle <= PI && render->angle >= 0))
 		img = &data->map.north;
-	}
 	else if (render->direction == 'h')
-	{
 		img = &data->map.south;
-	}
 	else if (render->direction == 'v' && (render->angle >= (PI / 2)
 			&& render->angle < (3 * PI / 2)))
 		img = &data->map.west;
@@ -59,6 +58,7 @@ void	ft_draw_wall(t_data *data, t_render *render, int x)
 	int	y;
 	int	y_off;
 	int	y_end;
+
 
 	y_off = (HEIGHT / 2) - (render->wall_height / 2);
 	y_end = (HEIGHT / 2) + (render->wall_height / 2) - 1;
@@ -87,6 +87,7 @@ void	ft_draw_square(t_data *data, t_point p, int size, int color)
 	int	j;
 
 	i = 0;
+
 	while (i < size)
 	{
 		j = 0;
@@ -110,19 +111,26 @@ void	ft_draw_square(t_data *data, t_point p, int size, int color)
 
 void	ft_draw_minimap(t_data *data, int i, int j, t_coordinates pl)
 {
+	int rows = ft_matrix_len((void **)data->map.map);
 	i = pl.x - 5;
 	while (i < pl.x + 5)
 	{
 		j = pl.y - 5;
 		while (j < pl.y + 5)
 		{
-			if (i >= 0 && j >= 0 && j < ft_matrix_len((void **)data->map.map)
+			if (i >= 0 && j >= 0 && j < rows
 				&& i < (int)ft_strlen(data->map.map[j]))
 			{
 				if (data->map.map[j][i]
 					&& ft_strchr("0NSWE", data->map.map[j][i]))
 					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
 						(j - pl.y + 5) * MWIDTH}, MWIDTH, DARK_GREY);
+				else if (data->map.map[j][i] == '2')
+					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
+						(j - pl.y + 5) * MWIDTH}, MWIDTH, PURPLE);
+				else if (data->map.map[j][i] == '3')
+					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
+						(j - pl.y + 5) * MWIDTH}, MWIDTH, CYAN);
 				else
 					ft_draw_square(data, (t_point){(i - pl.x + 5) * MWIDTH,
 						(j - pl.y + 5) * MWIDTH}, MWIDTH, LIGHT_GREEN);

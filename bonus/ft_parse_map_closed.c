@@ -79,7 +79,7 @@ int	ft_check_map_closed(t_map *map)
 		index[1] = 0;
 		while (map->map[index[0]][index[1]])
 		{
-			if (ft_strchr(" 0NWSE", map->map[index[0]][index[1]]))
+			if (ft_strchr(" 023NWSE", map->map[index[0]][index[1]]))
 			{
 				if (ft_surrounding_check(map->map, index[0], index[1]) == 0)
 					return (0);

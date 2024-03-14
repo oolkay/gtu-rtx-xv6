@@ -3,8 +3,7 @@ B_NAME := cub3d_bonus
 
 CC := gcc
 
-CFLAGS := 
-SOMEFLAG = -lft -lmlx -lm -lX11 -lXext
+CFLAGS := -g -ggdb -Wall -Wextra -Werror
 
 RM := rm -f
 
@@ -23,10 +22,8 @@ SRCS := ./srcs/calc_utils.c \
 		./srcs/ft_render.c \
 		./srcs/ft_start_game.c \
 		./srcs/ft_update.c \
-		./srcs/ft_wall_dimension.c \
 		./srcs/gnl_utils.c \
 		./srcs/gnl.c \
-		./srcs/list_utils.c \
 		./srcs/main.c \
 		./srcs/matrix.c
 
@@ -45,10 +42,8 @@ OBJS := ./objs/calc_utils.o \
 		./objs/ft_render.o \
 		./objs/ft_start_game.o \
 		./objs/ft_update.o \
-		./objs/ft_wall_dimension.o \
 		./objs/gnl_utils.o \
 		./objs/gnl.o \
-		./objs/list_utils.o \
 		./objs/main.o \
 		./objs/matrix.o
 
@@ -92,6 +87,7 @@ BONUS_OBJS := ./bonus_obj/calc_utils.o \
 		./bonus_obj/main.o \
 		./bonus_obj/matrix.o
 
+
 LIBFT_DIR := libft
 MINILIBX_DIR := minilibx
 
@@ -100,18 +96,20 @@ bonus : $(B_NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS)
 	@make -C $(LIBFT_DIR)
-	@$(CC)   $(CFLAGS) -I$(LIBFT_DIR) -L$(LIBFT_DIR)  $(OBJS) $(SOMEFLAG) -o $(NAME)
+	@make -C $(MINILIBX_DIR)
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 	@rm -rf $(B_NAME)
 	@echo "Compiled cub3d"
 
 $(B_NAME): $(BONUS_OBJS_DIR) $(BONUS_OBJS)
 	@make -C $(LIBFT_DIR)
-	@$(CC)  $(CFLAGS) -I$(LIBFT_DIR) -L$(LIBFT_DIR)  $(BONUS_OBJS) $(SOMEFLAG) -o $(B_NAME)
+	@make -C $(MINILIBX_DIR)
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit $(BONUS_OBJS) -o $(B_NAME)
 	@rm -rf $(NAME)
 	@echo "Compiled cub3d_bonus"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) ${SOMEFLAG} -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MINILIBX_DIR) -c $< -o $@
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)

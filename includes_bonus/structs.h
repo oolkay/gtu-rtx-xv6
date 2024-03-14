@@ -59,6 +59,7 @@ typedef struct s_player
 	t_coordinates			pos;
 	t_coordinates			dir;
 	t_coordinates			move;
+	int 					door_signal;
 	double					angle;
 	double					rotate;
 	double					angle_rad;
@@ -82,6 +83,8 @@ typedef struct s_data
 	t_player		player;
 	t_map			map;
 	t_img			minimap;
+	t_img			door;
+	t_img 			door_open;
 }	t_data;
 
 #endif

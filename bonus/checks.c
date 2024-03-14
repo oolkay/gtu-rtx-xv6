@@ -12,6 +12,23 @@
 
 #include "../includes_bonus/cub3d.h"
 
+void ft_open_door(t_data *data, t_render *r)
+{
+	if(data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] == '2'
+		&& r->distance < 1)
+	{
+		if (data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] == '2')
+			data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] = '3';
+	}
+	else if (data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] == '3'
+		&& r->distance < 1)
+	{
+		if (data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] == '3')
+			data->map.map[(int)(r->wall_hit.y)][(int)(r->wall_hit.x)] = '2';
+	}
+	data->player.door_signal = 0;
+}
+
 int	ft_extention_check(char *str)
 {
 	int	len;
